@@ -50,6 +50,7 @@ String rent(String email, String autonumber, String mark, String mudel){
    auto.autonumber=autonumber;
    auto.mark=mark;
    auto.mudel=mudel;
+   auto.rentija_email=email;
    rendiautoDao.save(auto);
    rentijaDao.save(isik);
    return isik.email+auto.autonumber;
@@ -63,16 +64,16 @@ String rent(String email, String autonumber, String mark, String mudel){
 	  }
 	  return sb.toString();
 	}
-/*
+
   @RequestMapping("/loetelu4")
-	public String loetelu3(){
+	public String loetelu4(){
 	  StringBuffer sb=new StringBuffer();
 	  for(Rendiauto auto: rendiautoDao.findAll()){
 	     sb.append(auto);
 	  }
 	  return sb.toString();
 	}
-
+/*
   @RequestMapping("/loetelu")
 	public String loetelu(){
 	  StringBuffer sb=new StringBuffer();
