@@ -196,6 +196,8 @@ public class MapsActivity
 
     private void addMarker(LatLng location, String title){
         try{
+			
+			// MITTE ALAR AASA TEHTUD - ALGUS
             BitmapDrawable markerIcon = (BitmapDrawable) ResourcesCompat
                     .getDrawable(getResources(), R.drawable.circle_512, null);
             assert markerIcon != null;
@@ -211,6 +213,9 @@ public class MapsActivity
                             .position(location)
                             .title(title)
                             .flat(false));
+							
+			// MITTE ALAR AASA TEHTUD - LÕPP
+
         } catch (java.lang.NullPointerException e){
             //Image not found, resetting to default pin image
             mMap
