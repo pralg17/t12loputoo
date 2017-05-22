@@ -1,0 +1,22 @@
+body{
+	background-color: #446ea1;
+	text-align: center;
+}
+
+p{
+	font-size:16px;
+	font-family:arial;
+}
+
+h2{
+	font-family:arial;
+}
+
+button{
+	background-color:green;
+	width:200px;
+	height:40px;
+	color:white;
+	border-radius:10px;
+	border-width: 1px;
+}
