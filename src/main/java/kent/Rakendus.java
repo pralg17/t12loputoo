@@ -53,7 +53,7 @@ String rent(String email, String autonumber, String mark, String mudel){
    auto.rentija_email=email;
    rendiautoDao.save(auto);
    rentijaDao.save(isik);
-   return isik.email+auto.autonumber;
+   return isik.email+" rentis auto "+auto.autonumber+" "+auto.mark+" "+auto.mudel;
 }
 
 	@RequestMapping("/loetelu2")
