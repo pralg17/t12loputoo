@@ -7,6 +7,7 @@ import org.jsoup.select.Elements;
 public class Veebiuurija {
 	String sisu;
 	String aadress;
+	int count = 0;
 
 	public Veebiuurija(String aadress) {
         this.aadress = aadress;
@@ -22,12 +23,18 @@ public class Veebiuurija {
 
 		try {
 			Document doc = Jsoup.connect(aadress).get();
-			sisu = doc.select(".eriline").toString();
-            String otsinguSona = "sisalda";
+			sisu = doc.select("body").toString();
+            String otsinguSona = "saab";
 
 	        if(sisu.contains(otsinguSona)) {
-	        	System.out.println("Antud leht sisaldab sõna " + otsinguSona);
+                int count = sisu.length() - sisu.replaceAll(otsinguSona,"").length();
+				//count / otsinguSona.length();
+	        	System.out.println("Antud leht sisaldab tervet sõna või sõnaosa " + otsinguSona + " " + (count / otsinguSona.length()) + " korda.");
 	        }
+			
+			else {
+				System.out.println("Antud leht ei sisalda sõna sisalda " + otsinguSona);
+			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -39,9 +46,3 @@ public class Veebiuurija {
 		uurija.uuri();
 	}
 }
-
-// javac -cp .;jsoup-1.8.2.jar Veebiuurija.java
-// java -cp .;jsoup-1.8.2.jar Veebiuurija
-
-// Uurib: http://www.tlu.ee/~brigid/veeb2016/
-// Antud leht sisaldab sõna sisalda
