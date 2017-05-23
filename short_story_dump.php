@@ -77,6 +77,8 @@ function getAllStories() 	{
 	}
 	//return $result;
 
+
+
 	foreach($result as $item) {
 //			echo '<div style="position:relative;">';
 		echo '<div style="display:flex;width:33%;margin-bottom:5px;"><div style="background-color:rgba('.rand(0,255).','.rand(0,255).','.rand(0,255).',0.5'.rand(0,1).');float:left;display:flex;justify-content:flex-end;word-wrap:break-word; position: relative">';
@@ -98,11 +100,51 @@ function getAllStories() 	{
 		echo '</div></div>';
 	}
 }
-/*
-if(isset($_POST['edit-btn'])){
-	updateStory($_POST['story-id'], );
+function searchStory ($keyword){
+	$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+	$stmt = $mysqli->prepare("SELECT id, author, story FROM story_dump WHERE story LIKE CONCAT('%',?,'%')");
+	echo $mysqli->error;
+
+	$stmt->bind_param("s", $keyword);
+	$stmt->bind_result($id, $author, $story);
+	if ($stmt->execute() ) {
+		$result = [];
+		while($stmt->fetch()) {
+
+			$object = new StdClass();
+			$object->id = $id;
+			$object->author = $author;
+			$object->story = $story;
+			array_push($result, $object);
+		}
+		echo "search success";
+	} else {
+
+		echo "ERROR ".$stmt->error;
+	}
+	foreach($result as $item) {
+//			echo '<div style="position:relative;">';
+		echo '<div style="display:flex;width:33%;margin-bottom:5px;"><div style="background-color:rgba('.rand(0,255).','.rand(0,255).','.rand(0,255).',0.5'.rand(0,1).');float:left;display:flex;justify-content:flex-end;word-wrap:break-word; position: relative">';
+		echo $item->author." wrote: <br><br>";
+		echo $item->story;
+
+		if(isset($_SESSION["userId"])): ?>
+		<form method="post" action="short_story_dump.php">
+		<input type="hidden" name="story-id" value="<?=$item->id?>">
+		<input type="submit" name="delete-btn" value="" class="delete" style="width:27px; height:29px; background-image:url('trash.png');position: absolute;right: 0;top: 0; cursor:pointer;">
+		</form>
+
+		<form method="get" action="short_story_edit.php">
+		<input type="hidden" name="storyId" value="<?=$item->id?>">
+		<input type="submit" name="edit-btn" value="" style="position:absolute; cursor:pointer; top:0px; right:25px; height:29px; width:29px; background-image:url('edit.png');" onclick="location.href='short_story_edit.php?storyId=<?=$item->id?>;">
+		</form>
+
+		<?php endif;
+		echo '</div></div>';
+	}
+
 }
-*/
+
 
 if (isset($_GET['logout'])) {
 	unset($_SESSION['userId']);
@@ -166,21 +208,34 @@ if (isset($_GET['logout'])) {
 		</form>
 	</div>
 	<div>
-		<?php getAllStories(); ?>
+		<?php
+			if (isset($_GET['search'])) {
+					searchStory($_GET['search']);
+			} else {
+					getAllStories();
+			}
+		 ?>
 	</div>
 </div>
 <div>
 	<?php if(!isset($_SESSION['userId']) && !isset($_SESSION['userEmail'])): ?>
 		<form action="http://localhost/3.kodutoo-III-ruhm/short_story_admin.php" method="get">
-				<input type="submit" name="login" value="Login">
+				<input type="submit" name="login" value="login">
 		</form>
 	<?php
 		endif;
 		if(isset($_SESSION['userId']) && isset($_SESSION['userEmail'])): ?>
 			<form style="float: right;" action="http://localhost/3.kodutoo-III-ruhm/short_story_dump.php" method="get">
-				<input type="submit" name="logout" value="Logout">
+				<input type="submit" name="logout" value="logout">
 			</form>
 	<?php endif; ?>
+	<form action="http://localhost/3.kodutoo-III-ruhm/short_story_dump.php" method="get">
+		wanna see specific stories? <input name="search" type="text" placeholder="your keyword here">
+		<input type="submit" value="search" >
+	</form>
+	<form action="http://localhost/3.kodutoo-III-ruhm/short_story_dump.php" method="get">
+		<input type="submit" value="clear search">
+	</form>
 </div>
 </body>
 </html>
