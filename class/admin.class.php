@@ -560,6 +560,172 @@ class Admin
 
         return $result;
     }
+    function getVarjudAgeASC(){
+
+        $stmt = $this->connection->prepare("
+			SELECT id, eesnimi, perekonnanimi, email, telefoninr, kool, vanus, bm, eriala, eriala2, pairId
+            FROM tudengivarjud
+            WHERE pairId=0 AND deleted is NULL
+            ORDER BY vanus ASC
+		");
+        echo $this->connection->error;
+
+        $stmt->bind_result($id,$eesnimi,$perenimi,$email,$telnr, $kool, $vanus, $bm, $eriala, $eriala2, $pairId);
+        $stmt->execute();
+
+
+        //tekitan massiivi
+        $result = array();
+
+        // tee seda seni, kuni on rida andmeid
+        // mis vastab select lausele
+        while ($stmt->fetch()) {
+
+            //tekitan objekti
+            $person = new StdClass();
+            $person->id = $id;
+            $person->eesnimi = $eesnimi;
+            $person->perekonnanimi = $perenimi;
+            $person->email = $email;
+            $person->telnr = $telnr;
+            $person->kool = $kool;
+            $person->vanus = $vanus;
+            $person->bm = $bm;
+            $person->eriala = $eriala;
+            $person->eriala2 = $eriala2;
+            $person->pairId = $pairId;
+
+            array_push($result, $person);
+        }
+
+        $stmt->close();
+
+        return $result;
+    }
+    function getTudengidAgeASC(){
+
+        $stmt = $this->connection->prepare("
+			SELECT id, eesnimi, perekonnanimi, email, telefoninr, vanus, eriala, kursus, bm, pairId
+            FROM tudengid
+            WHERE mituVarju>0 and deleted is NULL 
+            ORDER BY vanus ASC
+		");
+        echo $this->connection->error;
+
+        $stmt->bind_result($id,$eesnimi,$perenimi,$email,$telnr, $vanus, $eriala, $kursus, $bm, $pairId);
+        $stmt->execute();
+
+
+        //tekitan massiivi
+        $result = array();
+
+        // tee seda seni, kuni on rida andmeid
+        // mis vastab select lausele
+        while ($stmt->fetch()) {
+
+            //tekitan objekti
+            $tudeng = new StdClass();
+            $tudeng->id = $id;
+            $tudeng->eesnimi = $eesnimi;
+            $tudeng->perekonnanimi = $perenimi;
+            $tudeng->email = $email;
+            $tudeng->telnr = $telnr;
+            $tudeng->vanus = $vanus;
+            $tudeng->eriala = $eriala;
+            $tudeng->kursus = $kursus;
+            $tudeng->bm = $bm;
+            $tudeng->pairId = $pairId;
+
+            array_push($result, $tudeng);
+        }
+
+        $stmt->close();
+
+        return $result;
+    }
+    function getVarjudAgeDESC(){
+
+        $stmt = $this->connection->prepare("
+			SELECT id, eesnimi, perekonnanimi, email, telefoninr, kool, vanus, bm, eriala, eriala2, pairId
+            FROM tudengivarjud
+            WHERE pairId=0 AND deleted is NULL
+            ORDER BY vanus DESC
+		");
+        echo $this->connection->error;
+
+        $stmt->bind_result($id,$eesnimi,$perenimi,$email,$telnr, $kool, $vanus, $bm, $eriala, $eriala2, $pairId);
+        $stmt->execute();
+
+
+        //tekitan massiivi
+        $result = array();
+
+        // tee seda seni, kuni on rida andmeid
+        // mis vastab select lausele
+        while ($stmt->fetch()) {
+
+            //tekitan objekti
+            $person = new StdClass();
+            $person->id = $id;
+            $person->eesnimi = $eesnimi;
+            $person->perekonnanimi = $perenimi;
+            $person->email = $email;
+            $person->telnr = $telnr;
+            $person->kool = $kool;
+            $person->vanus = $vanus;
+            $person->bm = $bm;
+            $person->eriala = $eriala;
+            $person->eriala2 = $eriala2;
+            $person->pairId = $pairId;
+
+            array_push($result, $person);
+        }
+
+        $stmt->close();
+
+        return $result;
+    }
+    function getTudengidAgeDESC(){
+
+        $stmt = $this->connection->prepare("
+			SELECT id, eesnimi, perekonnanimi, email, telefoninr, vanus, eriala, kursus, bm, pairId
+            FROM tudengid
+            WHERE mituVarju>0 and deleted is NULL 
+            ORDER BY vanus DESC
+		");
+        echo $this->connection->error;
+
+        $stmt->bind_result($id,$eesnimi,$perenimi,$email,$telnr, $vanus, $eriala, $kursus, $bm, $pairId);
+        $stmt->execute();
+
+
+        //tekitan massiivi
+        $result = array();
+
+        // tee seda seni, kuni on rida andmeid
+        // mis vastab select lausele
+        while ($stmt->fetch()) {
+
+            //tekitan objekti
+            $tudeng = new StdClass();
+            $tudeng->id = $id;
+            $tudeng->eesnimi = $eesnimi;
+            $tudeng->perekonnanimi = $perenimi;
+            $tudeng->email = $email;
+            $tudeng->telnr = $telnr;
+            $tudeng->vanus = $vanus;
+            $tudeng->eriala = $eriala;
+            $tudeng->kursus = $kursus;
+            $tudeng->bm = $bm;
+            $tudeng->pairId = $pairId;
+
+            array_push($result, $tudeng);
+        }
+
+        $stmt->close();
+
+        return $result;
+    }
 
 
 

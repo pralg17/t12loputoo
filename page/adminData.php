@@ -245,6 +245,10 @@ Sinu Tudengivarjuveeb');
     $_SESSION["delVari"] = 0;
     $_SESSION["delTudeng"] = 0;
 }
+
+if (isset ($_POST ["cancelFilter"])) {
+    $_POST ["erialad"]="";
+}
 if (isset ($_POST ["erialad"])) {
         // oli olemas, ehk keegi vajutas nuppu
         if (empty($_POST ["erialad"])) {
@@ -261,6 +265,32 @@ if (isset ($_POST ["erialad"])) {
     }else{
     $varjud = $Admin->getVarjud();
     $tudengid = $Admin->getTudengid();
+}
+if (isset ($_POST ["noored"])) {
+    // oli olemas, ehk keegi vajutas nuppu
+    if (empty($_POST ["noored"])) {
+        //oli t�esti t�hi
+        $Error = "";
+    } else {
+        $varjud= $Admin->getVarjudAgeASC();
+        $tudengid= $Admin->getTudengidAgeASC();
+
+        $_POST ["noored"]="";
+
+    }
+}
+if (isset ($_POST ["vanad"])) {
+    // oli olemas, ehk keegi vajutas nuppu
+    if (empty($_POST ["vanad"])) {
+        //oli t�esti t�hi
+        $Error = "";
+    } else {
+        $varjud= $Admin->getVarjudAgeDESC();
+        $tudengid= $Admin->getTudengidAgeDESC();
+
+        $_POST ["vanad"]="";
+
+    }
 }
 if (isset ($_POST ["cancelFilter"])) {
     $_POST ["erialad"]="";
@@ -377,6 +407,18 @@ sort($allRegistred);
         </div>
         <button style="float: right;margin-left: 1" id="btnGroupMain2" name="filter" onmouseover="showErialad()" onmouseout="hideErialad()">FILTREERI</button>
     </div>
+
+<br><br>
+
+<div class="btn-group" style="position: absolute;right: -150;visibility: visible;margin-top: 54px;margin-bottom: 150px;width: 300px">
+    <form method="post">
+        <button type="submit" id="saveSortBtn" name="noored" value="noored" style="position: absolute;height: 100%;right: 601px;width: 100%">NOOREMAD ENNE</button>
+    </form>
+    <form method="post">
+        <button type="submit" id="saveSortBtn" name="vanad" value="1" style="position: absolute;height: 100%;right: 300px;width: 100%">VANEMAD ENNE</button>
+    </form>
+    <button style="float: right;margin-left: 1" id="btnGroupMain3" name="sort" >SORTREERI</button>
+</div>
 
 <br><br>
 
