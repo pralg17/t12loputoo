@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Spotter IRL</title>
+    <link href="static/bootstrap.min.css" rel="stylesheet">
+    <link href="static/jumbotron-narrow.css" rel="stylesheet">
+    <link href="static/style.css" rel="stylesheet">
+    <script src="static/jquery-3.2.1.min.js" charset="utf-8"></script>
+    <script src="static/script.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        var xhr = new XMLHttpRequest();
+
+        window.onload = function() {
+            if(window.location.href != gameServerAdress) {
+                window.location.assign("/");
+            }
+            setInterval(function() {
+                isJailed();
+                if (userJailed == "False") {
+                    window.location.assign("/");
+                }
+            }, 2000);
+        }
+
+
+        function logout() {
+            if(confirm("Kas oled kindel, et tahad kasutaja ja kõik tulemused kustutada?")) {
+                var phone = prompt("Kinnitamiseks sisesta telefoni number");
+                xhr.open("GET", "/wrongInfo?phone="+phone, true);
+                xhr.send();
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        console.log(xhr.responseText)
+                        window.location.assign("/")
+                    }
+                }
+            }
+        }
+
+        function checkStatus() {
+            
+        }
+    </script>
+</head>
+<body class="page-pending">
+    <div class="container">
+        <h1>Oled sees!</h1>
+        <p>kasutaja <span id="username" class="large">{{ user }}</span></p>
+        <p>telefon <span id="phone" class="large">{{ phone }}</span></p>
+        <p class="large">Saad kohe SMSi. Edasine @Keila päevade noorteala</p>
+        <div id="isJailed" hidden></div>
+        <p><input id="invalidRegistration" type="submit" class="danger" value="Tegid vea, tahad muuta?" onclick="logout()"></p>
+    </div>
+</body>
+</html>
