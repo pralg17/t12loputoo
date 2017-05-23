@@ -1,16 +1,13 @@
 var canvas;
 var ctx;
 var direction;
-var score = 1;
-var savedScore;
+var score = 0;
 var keyPressed = "";
 var refreshInterval;
 
 //snake
 var snakeRect = 20;
 var snakeSpeed = 200;
-var snakeHistoryX = [];
-var snakeHistoryY = [];
 var snakeTailX = [];
 var snakeTailY = [];
 var snakeX = 240;
@@ -32,8 +29,8 @@ function startGame(){
 	document.getElementById("startBtn").removeEventListener("click", startGame);
 	console.log("Game started!")
 	window.addEventListener("keydown", whatKey);
-	newFood();
 	drawSnake();
+	drawFood();
 }
 
 function whatKey(e){
@@ -88,76 +85,41 @@ function drawSnake(){
 		snakeY = 0;
 	}
 	
-	snakeHistoryX.push(snakeX);
-	snakeHistoryY.push(snakeY);
-	
-	snakeTailX.push(snakeX);
-	snakeTailY.push(snakeY);
-	
-	if(score == 1 || score == snakeTailX.length){
-		snakeTailX.shift();
-		snakeTailY.shift();
-		console.log(snakeTailX, snakeTailY);
-	}
-	
-	//kustutab ussi viimase ruudu
-	ctx.clearRect(snakeHistoryX[snakeHistoryX.length-1-score], snakeHistoryY[snakeHistoryY.length-1-score], snakeRect, snakeRect);
-	
-	//joonistab ussi esimese ruudu
+	//joonistab ussi
 	ctx.beginPath();
 		ctx.rect(snakeX, snakeY, snakeRect, snakeRect);
 		ctx.fill();
 	ctx.closePath();
 	//kontrollib, kas toit on söödud
 	eatFood();
-	//joonistab toidu
-	drawFood();
-	//kontrollib surma
-	//checkDeath();
-}
-
-function drawFood(){
-	ctx.beginPath();
-		ctx.rect(foodX, foodY, foodRect, foodRect);
-		ctx.fill();
-	ctx.closePath();
 }
 
 function eatFood(){
 	if(foodX == snakeX && foodY == snakeY){
 		score++;
 		document.getElementById("score").innerHTML = score;
-		newFood();
+		drawFood();
 	}
 }
 
-function newFood(){
+function drawFood(){
 	var canvasDivided = canvas.width/snakeRect-1;
 	foodX = Math.round(Math.random()*canvasDivided)*snakeRect;
 	foodY = Math.round(Math.random()*canvasDivided)*snakeRect;
+	ctx.beginPath();
+		ctx.rect(foodX, foodY, foodRect, foodRect);
+		ctx.fill();
+	ctx.closePath();
 	console.log(foodX, foodY, foodRect, foodRect);
-}
-
-function checkDeath(){
-		var j = 1;
-		for(var i = 0;i<snakeTailX.length;i++){
-			console.log(i, j);
-			for(j;j<snakeTailX.length;j++){
-				if(snakeTailX[i] == snakeTailX[j] && snakeTailY[i] == snakeTailY[j]){
-					console.log("surnud");
-					alert("!!Mäng läbi!!\nSinu skooriks sai "+ score);
-					location.reload();
-				}
-			}
-		
-		}
 }
 
 function moveUp(){
 	if(keyPressed == "up"){
+		ctx.clearRect(snakeX, snakeY, snakeRect, snakeRect);
 		snakeY = snakeY - snakeRect;
 		drawSnake();
 		refreshInterval = setInterval(function(){
+			ctx.clearRect(snakeX, snakeY, snakeRect, snakeRect);
 			snakeY = snakeY - snakeRect;
 			drawSnake();}, snakeSpeed);
 	}
@@ -165,19 +127,23 @@ function moveUp(){
 
 function moveDown(){
 	if(keyPressed == "down"){
+		ctx.clearRect(snakeX, snakeY, snakeRect, snakeRect);
 		snakeY = snakeY + snakeRect;
 		drawSnake();
 		refreshInterval = setInterval(function(){
+			ctx.clearRect(snakeX, snakeY, snakeRect, snakeRect);
 			snakeY = snakeY + snakeRect;
 			drawSnake();}, snakeSpeed);
 	}
 }
 
 function moveLeft(){
+	ctx.clearRect(snakeX, snakeY, snakeRect, snakeRect);
 		snakeX = snakeX - snakeRect;
 		drawSnake();
 	if(keyPressed == "left"){
 		refreshInterval = setInterval(function(){
+			ctx.clearRect(snakeX, snakeY, snakeRect, snakeRect);
 			snakeX = snakeX - snakeRect;
 			drawSnake();}, snakeSpeed);
 	}
@@ -185,9 +151,11 @@ function moveLeft(){
 
 function moveRight(){
 	if(keyPressed == "right"){
+		ctx.clearRect(snakeX, snakeY, snakeRect, snakeRect);
 		snakeX = snakeX + snakeRect;
 		drawSnake();
 		refreshInterval = setInterval(function(){
+			ctx.clearRect(snakeX, snakeY, snakeRect, snakeRect);
 			snakeX = snakeX + snakeRect;
 			drawSnake();}, snakeSpeed);
 	}

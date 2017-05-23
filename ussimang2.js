@@ -2,19 +2,19 @@ var canvas;
 var ctx;
 var direction;
 var score = 1;
-var savedScore;
 var keyPressed = "";
 var refreshInterval;
 
 //snake
 var snakeRect = 20;
 var snakeSpeed = 200;
-var snakeHistoryX = [];
-var snakeHistoryY = [];
 var snakeTailX = [];
 var snakeTailY = [];
 var snakeX = 240;
 var snakeY = 240;
+snakeTailX[0] = snakeX;
+snakeTailY[0] = snakeY;
+
 
 //food
 var foodRect = 20;
@@ -74,46 +74,46 @@ function whatKey(e){
 }
 
 function drawSnake(){
+	//puhastab canvase
+	canvas.width = canvas.width;
 	//kontrollib kas uss on läinud üle canvase ääre
-	if(snakeX<(canvas.width-canvas.width)){
+	/*
+	if(snakeTailX[snakeTailX.length-1]<(canvas.width-canvas.width)){
 		snakeX = canvas.width-snakeRect;
 	}
-	if(snakeX>canvas.width-snakeRect){
+	if(snakeTailX[snakeTailX.length-1]>canvas.width-snakeRect){
 		snakeX = 0;
 	}
-	if(snakeY<(canvas.height-canvas.height)){
+	if(snakeTailY[snakeTailY.length-1]<(canvas.height-canvas.height)){
 		snakeY = canvas.height-snakeRect;
 	}
-	if(snakeY>canvas.height-snakeRect){
+	if(snakeTailY[snakeTailY.length-1]>canvas.height-snakeRect){
 		snakeY = 0;
+	}*/
+	
+	if(score == snakeTailX.length){
+		snakeTailX.splice(0, 1);
+		snakeTailY.splice(0, 1);
 	}
 	
-	snakeHistoryX.push(snakeX);
-	snakeHistoryY.push(snakeY);
-	
-	snakeTailX.push(snakeX);
-	snakeTailY.push(snakeY);
-	
-	if(score == 1 || score == snakeTailX.length){
-		snakeTailX.shift();
-		snakeTailY.shift();
-		console.log(snakeTailX, snakeTailY);
+	for(var i = 0; i==score; i++){
+		ctx.beginPath();
+			ctx.rect(snakeTailX[i], snakeTailY[i], snakeRect, snakeRect);
+			ctx.fill();
+		ctx.closePath();
+
 	}
 	
-	//kustutab ussi viimase ruudu
-	ctx.clearRect(snakeHistoryX[snakeHistoryX.length-1-score], snakeHistoryY[snakeHistoryY.length-1-score], snakeRect, snakeRect);
 	
-	//joonistab ussi esimese ruudu
-	ctx.beginPath();
+	//joonistab ussi
+	/*ctx.beginPath();
 		ctx.rect(snakeX, snakeY, snakeRect, snakeRect);
 		ctx.fill();
-	ctx.closePath();
-	//kontrollib, kas toit on söödud
-	eatFood();
+	ctx.closePath();*/
 	//joonistab toidu
 	drawFood();
-	//kontrollib surma
-	//checkDeath();
+	//kontrollib, kas toit on söödud
+	eatFood();
 }
 
 function drawFood(){
@@ -138,57 +138,59 @@ function newFood(){
 	console.log(foodX, foodY, foodRect, foodRect);
 }
 
-function checkDeath(){
-		var j = 1;
-		for(var i = 0;i<snakeTailX.length;i++){
-			console.log(i, j);
-			for(j;j<snakeTailX.length;j++){
-				if(snakeTailX[i] == snakeTailX[j] && snakeTailY[i] == snakeTailY[j]){
-					console.log("surnud");
-					alert("!!Mäng läbi!!\nSinu skooriks sai "+ score);
-					location.reload();
-				}
-			}
-		
-		}
-}
-
 function moveUp(){
 	if(keyPressed == "up"){
-		snakeY = snakeY - snakeRect;
+		console.log(snakeTailY, snakeTailY);
+		snakeY = snakeTailY[snakeTailY.length-1] - snakeRect;
+		snakeTailX.push(snakeX);
+		snakeTailY.push(snakeY);
 		drawSnake();
 		refreshInterval = setInterval(function(){
-			snakeY = snakeY - snakeRect;
+			snakeY = snakeTailY[snakeTailY.length-1] - snakeRect;
+			snakeTailX.push(snakeX);
+			snakeTailY.push(snakeY);
 			drawSnake();}, snakeSpeed);
 	}
 }
 
 function moveDown(){
 	if(keyPressed == "down"){
-		snakeY = snakeY + snakeRect;
+		snakeY = snakeTailY[snakeTailY.length-1] - snakeRect;
+		snakeTailX.push(snakeX);
+		snakeTailY.push(snakeY);
 		drawSnake();
 		refreshInterval = setInterval(function(){
-			snakeY = snakeY + snakeRect;
+			snakeY = snakeTailY[snakeTailY.length-1] + snakeRect;
+			snakeTailX.push(snakeX);
+			snakeTailY.push(snakeY);
 			drawSnake();}, snakeSpeed);
 	}
 }
 
 function moveLeft(){
-		snakeX = snakeX - snakeRect;
+		snakeX = snakeTailX[snakeTailX.length-1] - snakeRect;
+		snakeTailX.push(snakeX);
+		snakeTailY.push(snakeY);
 		drawSnake();
 	if(keyPressed == "left"){
 		refreshInterval = setInterval(function(){
-			snakeX = snakeX - snakeRect;
+			snakeX = snakeTailX[snakeTailX.length-1] - snakeRect;
+			snakeTailX.push(snakeX);
+			snakeTailY.push(snakeY);
 			drawSnake();}, snakeSpeed);
 	}
 }
 
 function moveRight(){
 	if(keyPressed == "right"){
-		snakeX = snakeX + snakeRect;
+		snakeX = snakeTailX[snakeTailX.length-1] + snakeRect;
+		snakeTailX.push(snakeX);
+		snakeTailY.push(snakeY);
 		drawSnake();
 		refreshInterval = setInterval(function(){
-			snakeX = snakeX + snakeRect;
+			snakeX = snakeTailX[snakeTailX.length-1] + snakeRect;
+			snakeTailX.push(snakeX);
+			snakeTailY.push(snakeY);
 			drawSnake();}, snakeSpeed);
 	}
 }
