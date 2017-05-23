@@ -1,0 +1,19 @@
+
+CREATE TABLE rentijad(
+  email VARCHAR(30) NOT NULL PRIMARY KEY,
+  rentimisi INT DEFAULT 0
+);
+
+INSERT INTO rentijad VALUES ('juku@eesti.ee', 14);
+
+CREATE TABLE rendiautod(
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  autonumber VARCHAR(30),
+  mark VARCHAR(30),
+  mudel VARCHAR(30),
+  rentija_email VARCHAR(30),
+  FOREIGN KEY(rentija_email) REFERENCES rentijad(email)
+);
+
+INSERT INTO rendiautod VALUES (NULL, "313BMD", "Volvo", "S40", "juku@eesti.ee");
+INSERT INTO rendiautod VALUES (NULL, "666LOL", "BMW", "X6", "juku@eesti.ee");
