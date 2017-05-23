@@ -1,6 +1,6 @@
 <?php
 
-require("../../../config.php");
+require("../../../../../config.php");
 //functions.php
 
 $database = "if16_Aaviste_praktika";

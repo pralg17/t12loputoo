@@ -41,6 +41,18 @@ $text = $Admin->getWelcomeText();
 
 
 
+if(isset($_FILES['image'])){
+      $errors= array();
+      $file_name = $_FILES['image']['name'];
+      $file_tmp = $_FILES['image']['tmp_name'];
+
+      if(empty($errors)==true) {
+         move_uploaded_file($file_tmp,"/home/siimhuts/public_html/java/Kodused/t12loputoo/style/taust.jpg");
+         echo "Success";
+      }else{
+         print_r($errors);
+      }
+   }
 
 ?>
 <?php require("../header.php");?>
@@ -62,8 +74,14 @@ $text = $Admin->getWelcomeText();
             </div>
         </div>
     </div>
+
+    <form action = "" method = "POST" enctype = "multipart/form-data">
+       <input type = "file" name = "image" />
+       <input type = "submit"/>
+
+    <ul>
+       <li>Sent file: <?php echo $_FILES['image']['name'];  ?>
+       <li>File type: <?php echo $_FILES['image']['type'] ?>
+    </ul>
+</form>
 </body>
-
-
-
-
