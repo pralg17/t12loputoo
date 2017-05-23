@@ -2,9 +2,9 @@
 
 {% block content %}
     <div class="event">
-        {% if post.event_date %}
+        {% if event.event_date %}
             <div class="date">
-                {{ post.event_date }}
+                {{ event.event_date }}
             </div>
         {% endif %}
         {% if user.is_authenticated %}
@@ -14,4 +14,15 @@
         <h1>{{ event.title }}</h1>
         <p>{{ event.descripton|linebreaksbr }}</p>
     </div>
+    <hr>
+    <a class="btn btn-default" href="{% url 'add_comment_to_event' pk=event.pk %}">Add comment</a>
+{% for comment in event.comments.all %}
+    <div class="comment">
+        <div class="date">{{ comment.created_date }}</div>
+        <strong>{{ comment.author }}</strong>
+        <p>{{ comment.text|linebreaks }}</p>
+    </div>
+{% empty %}
+    <p>No comments here yet :(</p>
+{% endfor %}
 {% endblock %}

@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from .models import Event
-from .forms import EventForm
+from .forms import EventForm, CommentForm
 
 
 def event_list(request):
@@ -63,3 +63,17 @@ def event_remove(request, pk):
     event = get_object_or_404(Event, pk=pk)
     event.delete()
     return redirect('event_list')
+
+
+def add_comment_to_event(request, pk):
+    post = get_object_or_404(Event, pk=pk)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+            return redirect('event_detail', pk=post.pk)
+    else:
+        form = CommentForm()
+    return render(request, 'events/add_comment_to_event.html', {'form': form})

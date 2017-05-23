@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^event/new/$', views.event_new, name='event_new'),
     url(r'^event/(?P<pk>\d+)/edit/$', views.event_edit, name='event_edit'),
     url(r'^event/(?P<pk>\d+)/remove/$', views.event_remove, name='event_remove'),
+    url(r'^event/(?P<pk>\d+)/comment/$', views.add_comment_to_event, name='add_comment_to_event'),
 ]

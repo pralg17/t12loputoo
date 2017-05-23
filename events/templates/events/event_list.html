@@ -7,8 +7,9 @@
             <div class="date">
             <p>Toimumise aeg: {{ event.event_date }}</p>
             </div>
-            <p>{{ post.descripton|linebreaksbr }}</p>
+            <p>{{ event.descripton|linebreaksbr }}</p>
             <p>Asukoht: {{ event.location }}</p>
+            <a href="{% url 'event_detail' pk=event.pk %}">Comments: {{ event.comments.count }}</a>
         </div>
     {% endfor %}
 {% endblock %}
