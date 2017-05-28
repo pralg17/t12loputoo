@@ -1,7 +1,8 @@
 ﻿<?php
 	
 	require("function.php");
-		
+	require("style.php");
+	
 	//SALVESTAMINE
 	if (isset ($_POST["tagasiside"]) &&
 		!empty ($_POST["tagasiside"])
@@ -19,16 +20,16 @@
 ?>
 
 <html>
-<a href="chatpage.php"> go back </a>
 	
 <body>	
+	<center>
 	
 	<!--TAGASISIDE-->
 	<div class="Kommentaar">
 		
 		<form method="POST">
 		
-		<input name="tagasiside" class="text" placeholder="Jäta kommentaar">
+		<input name="tagasiside" class="text" placeholder="Jäta kommentaar" maxlength="50" required>
 		
 		<br><input type="submit" value="Saada"></br>
 
@@ -36,8 +37,7 @@
 		
 	</div>
 
-</body>
-</html>
+
 
 <?php 
 $html = "<table>";
@@ -68,3 +68,7 @@ $html1 = "<table>";
 $html1 .= "</table>";
 echo $html1
 ?>
+	<a href="chatpage.php">GO BACK</a>
+</center>
+</body>
+</html>

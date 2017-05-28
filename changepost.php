@@ -1,6 +1,7 @@
 <?php
 	
 	require("function.php");
+	require("style.php");
 	
 	//NÄITAB ÜHE POSTITUSE KOGU INFOT
 		function getsingleId2($show_id){

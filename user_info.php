@@ -2,6 +2,7 @@
 	
 	//FUNKTSIOONID
 	require("function.php");
+	require("style.php");
 	
 	//NÄITAB ÜHE KASUTAJA INFOT
 	function kasutajainfo(){
@@ -99,74 +100,77 @@
 ?>
 
 <html>
-<a href="chatpage.php"> GO BACK </a>
+	<center>
+	<div class="Tabelid">
+		<h1>MINU ANDMED</h1>
+		<?php 
+		$html = "<table>";
+			
+			$html .= "<tr>";
+				$html .= "<th>Kasutaja ID</th>";
+				$html .= "<th>Kasutaja</th>";
+				$html .= "<th>Sugu</th>";
+			$html .= "</tr>";
+			
+			foreach ($people as $p) {
+			$html .= "<tr>";
+				$html .= "<td>".$p->id."</td>";
+				$html .= "<td>".$p->kasutaja."</td>";
+				$html .= "<td>".$p->sugu."</td>";
+			$html .= "</tr>";
+			}
+
+			$html .= "</table>";
+			
+		echo $html
+		?>
+		<h1>MINU KOMMENTAARID</h1>
+		<?php 
+		$html1 = "<table>";
+			
+			$html1 .= "<tr>";
+				$html1 .= "<th>tagasiside</th>";
+				$html1 .= "<th>post_id</th>";
+				$html1 .= "<th></th>";		
+			$html1 .= "</tr>";
+			
+			foreach ($comments as $p) {
+			$html1 .= "<tr>";
+				$html1 .= "<td>".$p->tagasiside."</a></td>";
+				$html1 .= "<td>".$p->post_id."</a></td>";
+				$html1 .= "<td><a href='changecomment.php?id=".$p->id."'>Muuda kommentaari</a></td>";
+			}
+		$html1 .= "</table>";
+		echo $html1
+		?>
+		<h1>MINU POSTITUSED</h1>
+
+		<?php 
+		$html2 = "<table>";
+			
+			$html2 .= "<tr>";
+				$html2 .= "<th>pealkiri</th>";
+				$html2 .= "<th>komment</th>";
+				$html2 .= "<th>kategooria</th>";
+				$html2 .= "<th>Viimati muudetud</th>";
+				$html2 .= "<th></th>";
+			$html2 .= "</tr>";
+			
+			foreach ($postitused as $p) {
+			$html2 .= "<tr>";
+				$html2 .= "<td>".$p->pealkiri."</td>";
+				$html2 .= "<td>".$p->komment."</td>";
+				$html2 .= "<td>".$p->kategooria."</td>";
+				$html2 .= "<td>".$p->kellaaeg."</a></td>";
+				$html2 .= "<td><a href='changepost.php?id=".$p->id."'>Muuda postituse</a></td>";
+			$html2 .= "</tr>";
+			}
+
+			$html2 .= "</table>";
+			
+		echo $html2
+		?>
+	<a href="chatpage.php"> GO BACK </a>
+	</div>
+</center>
 </html>
-<h1>MINU ANDMED</h1>
-<?php 
-$html = "<table>";
-	
-	$html .= "<tr>";
-		$html .= "<th>Kasutaja ID</th>";
-		$html .= "<th>Kasutaja</th>";
-		$html .= "<th>Sugu</th>";
-		$html .= "<th></th>";
-	$html .= "</tr>";
-	
-	foreach ($people as $p) {
-	$html .= "<tr>";
-		$html .= "<td>".$p->id."</td>";
-		$html .= "<td>".$p->kasutaja."</td>";
-		$html .= "<td>".$p->sugu."</td>";
-	$html .= "</tr>";
-	}
-
-	$html .= "</table>";
-	
-echo $html
-?>
-<h1>MINU KOMMENTAARID</h1>
-<?php 
-$html1 = "<table>";
-	
-	$html1 .= "<tr>";
-		$html1 .= "<th>tagasiside</th>";
-		$html1 .= "<th>post_id</th>";
-		$html1 .= "<th></th>";		
-	$html1 .= "</tr>";
-	
-	foreach ($comments as $p) {
-	$html1 .= "<tr>";
-		$html1 .= "<td>".$p->tagasiside."</a></td>";
-		$html1 .= "<td>".$p->post_id."</a></td>";
-		$html1 .= "<td><a href='changecomment.php?id=".$p->id."'>Muuda kommentaari</a></td>";
-	}
-$html1 .= "</table>";
-echo $html1
-?>
-<h1>MINU POSTITUSED</h1>
-
-<?php 
-$html2 = "<table>";
-	
-	$html2 .= "<tr>";
-		$html2 .= "<th>pealkiri</th>";
-		$html2 .= "<th>komment</th>";
-		$html2 .= "<th>kategooria</th>";
-		$html2 .= "<th>Viimati muudetud</th>";
-		$html2 .= "<th></th>";
-	$html2 .= "</tr>";
-	
-	foreach ($postitused as $p) {
-	$html2 .= "<tr>";
-		$html2 .= "<td>".$p->pealkiri."</td>";
-		$html2 .= "<td>".$p->komment."</td>";
-		$html2 .= "<td>".$p->kategooria."</td>";
-		$html2 .= "<td>".$p->kellaaeg."</a></td>";
-		$html2 .= "<td><a href='changepost.php?id=".$p->id."'>Muuda postituse</a></td>";
-	$html2 .= "</tr>";
-	}
-
-	$html2 .= "</table>";
-	
-echo $html2
-?>

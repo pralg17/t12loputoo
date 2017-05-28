@@ -2,6 +2,7 @@
 
 	//FUNKTSIOONID
 	require("function.php");
+	require("style.php");
 	
 	//LOG OUT
 	if (isset($_GET["logout"])) {
@@ -30,21 +31,21 @@
 	<head>
 	<title>Forum page</title>
 	
-		<style>		
-		</style>
-	
 	</head>
 
 	<body>
 		
+		<center>
+		
 		<div class="Loo uue postituse">
 			<form method="POST" >
-		
+				
+				<h1>Loo uue postituse: </h1>
 				<br><label for="Pealkiri">Pealkiri</label></br>
-				<input name="Pealkiri" type ="text" placeholder="Postituse pealkiri"><br>
+				<input name="Pealkiri" type ="text" placeholder="Postituse pealkiri" required><br>
 				
 				<br><label for="Kommentaar">Kommentaar</label></br>
-				<input name="Kommentaar" type ="text" placeholder="Postituse Kommentaar"><br>
+				<input name="Kommentaar" type ="text" placeholder="Postituse Kommentaar" maxlength="50" required><br>
 				
 				<p><label for="Kategooria">Vali kategooria:</label><br>
 					<select name = "Kategooria"  id="Kategooria" required><br><br>
@@ -62,10 +63,10 @@
 		</div>
 	
 		<a href="?logout=1">LOGI VÄLJA</a>
-		<a href="user_info.php">Minu andmed</a>
+		<a href="user_info.php">MINU ANDMED</a>
 		
-	</body>
-</html>
+		<h1>Video-mängude foorum: </h1>
+
 
 <?php 
 $html = "<table>";
@@ -96,3 +97,8 @@ $html = "<table>";
 	
 echo $html
 ?>
+
+		</center>
+		
+	</body>
+</html>
