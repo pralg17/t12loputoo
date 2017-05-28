@@ -55,13 +55,24 @@
 				return $error;
 		}
 		
+	//POSTITUSE LOOMINE
+		function postitus($pealkiri, $komment, $kategooria) {
+		
+		$mysqli = new mysqli($GLOBALS["serverHost"],$GLOBALS["serverUsername"],$GLOBALS["serverPassword"],$GLOBALS["database"]);
+		
+		$stmt = $mysqli->prepare("INSERT INTO loputoo_post (pealkiri, komment, kategooria, kasutaja) VALUE (?, ?, ?, ?)");
+		echo $mysqli->error;
+		$stmt->bind_param("ssss",$pealkiri, $komment , $kategooria, $_SESSION["userKasutaja"]);
+		if ( $stmt->execute() ) {
+			echo "Õnnestus!";
+		} else {
+			echo "ERROR ".$stmt->error;
+			}	
+		}
+		
 	//TABELID
 		//KASUTAJA TABLE
-			function kasutajainfo(){
-			$mysqli = new mysqli($GLOBALS["serverHost"], 
-			$GLOBALS["serverUsername"], 
-			$GLOBALS["serverPassword"], 
-			$GLOBALS["database"]);
+			function kasutajainfo(){$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 			
 			$stmt = $mysqli->prepare("
 			SELECT id, kasutaja, sugu, timestamp
