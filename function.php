@@ -55,4 +55,31 @@
 				return $error;
 		}
 		
+	//TABELID
+		//KASUTAJA TABLE
+			function kasutajainfo(){
+			$mysqli = new mysqli($GLOBALS["serverHost"], 
+			$GLOBALS["serverUsername"], 
+			$GLOBALS["serverPassword"], 
+			$GLOBALS["database"]);
+			
+			$stmt = $mysqli->prepare("
+			SELECT id, kasutaja, sugu, timestamp
+			FROM loputoo_kasutaja 
+			");
+			
+			$stmt->bind_result($id, $kasutaja, $sugu, $timestamp);
+			$stmt->execute();
+			
+			$results = array();
+			while ($stmt->fetch()) {
+				$inimene = new StdClass();
+				$inimene->id = $id;
+				$inimene->kasutaja = $kasutaja;
+				$inimene->sugu = $sugu;
+				$inimene->timestamp = $timestamp;
+				array_push($results, $inimene);	
+			}
+			return $results;
+		}
 ?>
