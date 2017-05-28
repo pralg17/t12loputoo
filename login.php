@@ -1,5 +1,9 @@
 ﻿<?php
 
+	//FUNKTSIOON
+	require("../config.php");
+	require("function.php");
+	
 	//MUUTUAJD
 	$regKasutaja = $regKasutajaError = $regParool = $regParoolError = $regSugu = "" ;
 	$logKasutaja = $logKasutajaError = $logParool = $logParoolError = "";
@@ -16,12 +20,13 @@
 		$regKasutajaError = "* Nimi ei tohi olla rohkem kui 15 tähemärki pikk!";
 	}
 	//PAROOL
-	if (isset ($_POST["regParool"])) {
+	if(isset ($_POST["regParool"])) {
 		if (empty ($_POST["regParool"])) {
-			$regParoolError = "* Väli on kohustuslik!";
-			} else {
-		}if (strlen ($_POST["regParool"]) <8)
-			$regParoolError = "* Parool peab olema vähemalt 8 tähemärki pikk!";
+		$regParoolError = "See väli on kohustuslik!";
+		} else {
+		if (strlen ($_POST["regParool"]) <6)
+		$regParoolError = "Parool peab olema vähemalt 6 tähemärki!";
+		}
 	}
 	
 	//LOOGIMINE SISSE
@@ -35,12 +40,28 @@
 		}
 	}
 	
+	
 	//PAROOL
 	if (isset ($_POST["logParool"])) {
 		if (empty ($_POST["logParool"])) {
 			$logParoolError = "* Väli on kohustuslik!";
 		} 
 	}
+	
+	//REGISTREERIMISE LÕPP
+	if ( $regKasutajaError == "" AND
+		$regParoolError == "" &&
+		isset($_POST["regKasutaja"]) &&
+		isset($_POST["regParool"])
+	)
+	if (isset($_POST["regKasutaja"])&&
+		!empty($_POST["regParool"])
+		)
+		//SALVESTAMINE JA FUNKTSIOON
+		{
+		$regParool = hash("sha512", $_POST["regParool"]);
+		registration($regKasutaja, $regParool, $_POST["regSugu"]);
+		}
 		
 ?>
 
@@ -74,21 +95,22 @@
 				
 					<label></label><br>	
 					
+					<br><label for="regKasutaja">Kasutaja</label></br>
 					<input name="regKasutaja" placeholder="Kasutaja" value="<?=$regKasutaja;?>"> 
 					<br><font color="red"><?php echo $regKasutajaError; ?></font></br>
 					
+					<br><label for="regParool">Parool</label></br>
 					<input name="regParool" type = "password" placeholder="Parool"> 
 					<br><font color="red"><?php echo $regParoolError; ?></font></br>
 					
 					<p><label for="regSugu">Sugu:</label><br>
 					<select name = "regSugu"  id="regSugu" required><br><br>
 					<option value="">Näita</option>
-					<option value="1">Mees</option>
-					<option value="2">Naine</option>
-					<option value="2">Muu</option>
+					<option value="Mees">Mees</option>
+					<option value="Naine">Naine</option>
+					<option value="Muu">Muu</option>
 					</select><br><br>
 					
-
 				<input type="submit" value="Loo kasutaja">
 					
 				</form>
