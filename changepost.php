@@ -29,21 +29,65 @@
 			$stmt->close();
 			return $singleId;
 		}
-		
+	//POSTI UUENDAMINE
+		//UUENDA
+		function uuendaPost($pealkiri, $komment, $kategooria){
+			$mysqli = new mysqli($GLOBALS["serverHost"],
+			$GLOBALS["serverUsername"],
+			$GLOBALS["serverPassword"],
+			$GLOBALS["database"]);
+			
+			$stmt = $mysqli->prepare("UPDATE loputoo_post SET pealkiri=?, komment=?, kategooria=?  WHERE id=?");
+			$stmt->bind_param("sssi", $pealkiri, $komment, $kategooria, $_GET["id"]);
+
+			if($stmt->execute()){
+				header("Location: user_info?id=". $_GET["id"]."&success=true");
+			}
+			$stmt->close();
+			$mysqli->close();	
+		}
+
+	
+	//POSTI UUENDAMINE
+		if(isset($_POST["uuendaPost"])){	
+			uuendaPost($_POST["pealkiri"], $_POST["komment"], $_POST["kategooria"]);
+			exit();	
+		}
 
 	$p = getsingleId2($_GET["id"]);
 ?>
-<h1>Muuda andmed</h1>
+<html>
+	
+	<style>
+	</style>
 
-<?php 
-$html = "<table>";
+	<body>
 
-	$html .= "<tr>";
-		$html .= "<td>".$p->pealkiri."</td>";
-		$html .= "<td>".$p->komment."</td>";
-		$html .= "<td>".$p->kategooria."</td>";
-	$html .= "</tr>";
+		<div style="changepost">
+			<center>
+				<form method= "POST" >
+				
+				<label for="pealkiri" >Pealkiri:</label><br>
+				<input id="pealkiri" name="pealkiri" class="text" value="<?php echo $p->pealkiri;?>" required> <br>
+				
+				<label for="komment" >Kommentaar:</label><br>
+				<input id="komment" name="komment" class="text" value="<?php echo $p->komment;?>" required> <br>
+				
+				<p><label for="kategooria">Sinu kategooria <?php echo $p->kategooria;?></label><br>
+					<select name = "kategooria"  id="kategooria" required><br><br>
+					<option value="">Vali kategooria:</option>
+					<option value="PC games">PC games</option>
+					<option value="Xbox games">Xbox games</option>
+					<option value="Nintendo games">Nintendo games</option>
+					<option value="PlayStation games">PlayStation games</option>
+					<option value="Mobile gamess">Mobile games</option>
+				</select><br><br>
+				
+				<input type="submit" name="uuendaPost" value="Uuenda">
+				
+				</form>
+			</center>
+		</div>
 
-$html .= "</table>";
-echo $html
-?>
+	</body>
+</html>

@@ -41,21 +41,21 @@
 		$GLOBALS["database"]);
 		
 		$stmt = $mysqli->prepare("
-		SELECT tagasiside, post_id, kellaaeg
+		SELECT id, tagasiside, post_id
 		FROM loputoo_komment
 		WHERE kasutaja = ?
 		");
 		
 		$stmt->bind_param("s", $_SESSION["userKasutaja"]);
-		$stmt->bind_result($tagasiside, $post_id, $kellaaeg);
+		$stmt->bind_result($id, $tagasiside, $post_id);
 		$stmt->execute();
 		$results = array();
 		
 		while ($stmt->fetch()) {
 			$userkomm = new StdClass();
+			$userkomm->id = $id;
 			$userkomm->tagasiside = $tagasiside;
 			$userkomm->post_id = $post_id;
-			$userkomm->kellaaeg = $kellaaeg;
 			array_push($results, $userkomm);	
 		}
 		return $results;
@@ -131,7 +131,6 @@ $html1 = "<table>";
 	$html1 .= "<tr>";
 		$html1 .= "<th>tagasiside</th>";
 		$html1 .= "<th>post_id</th>";
-		$html1 .= "<th>kellaaeg</th>";
 		$html1 .= "<th></th>";		
 	$html1 .= "</tr>";
 	
@@ -139,7 +138,7 @@ $html1 = "<table>";
 	$html1 .= "<tr>";
 		$html1 .= "<td>".$p->tagasiside."</a></td>";
 		$html1 .= "<td>".$p->post_id."</a></td>";
-		$html1 .= "<td>".$p->kellaaeg."</a></td>";
+		$html1 .= "<td><a href='changecomment.php?id=".$p->id."'>Muuda kommentaari</a></td>";
 	}
 $html1 .= "</table>";
 echo $html1
@@ -153,7 +152,7 @@ $html2 = "<table>";
 		$html2 .= "<th>pealkiri</th>";
 		$html2 .= "<th>komment</th>";
 		$html2 .= "<th>kategooria</th>";
-		$html2 .= "<th>kellaaeg</th>";
+		$html2 .= "<th>Viimati muudetud</th>";
 		$html2 .= "<th></th>";
 	$html2 .= "</tr>";
 	
@@ -163,7 +162,7 @@ $html2 = "<table>";
 		$html2 .= "<td>".$p->komment."</td>";
 		$html2 .= "<td>".$p->kategooria."</td>";
 		$html2 .= "<td>".$p->kellaaeg."</a></td>";
-		$html2 .= "<td><a href='changepost.php?id=".$p->id."'>Muuda kommentaari</a></td>";
+		$html2 .= "<td><a href='changepost.php?id=".$p->id."'>Muuda postituse</a></td>";
 	$html2 .= "</tr>";
 	}
 
