@@ -69,17 +69,18 @@
 		$GLOBALS["database"]);
 		
 		$stmt = $mysqli->prepare("
-		SELECT pealkiri, komment, kategooria, kellaaeg
+		SELECT id, pealkiri, komment, kategooria, kellaaeg
 		FROM loputoo_post
 		WHERE kasutaja = ?
 		");
 		$stmt->bind_param("s", $_SESSION["userKasutaja"]);
-		$stmt->bind_result($pealkiri, $komment, $kategooria, $kellaaeg);
+		$stmt->bind_result($id,$pealkiri, $komment, $kategooria, $kellaaeg);
 		$stmt->execute();
 		$results = array();
 		
 		while ($stmt->fetch()) {
 			$postinfo = new StdClass();
+			$postinfo->id = $id;
 			$postinfo->pealkiri = $pealkiri;
 			$postinfo->komment = $komment;
 			$postinfo->kategooria = $kategooria;
@@ -146,26 +147,27 @@ echo $html1
 <h1>MINU POSTITUSED</h1>
 
 <?php 
-$html = "<table>";
+$html2 = "<table>";
 	
-	$html .= "<tr>";
-		$html .= "<th>pealkiri</th>";
-		$html .= "<th>komment</th>";
-		$html .= "<th>kategooria</th>";
-		$html .= "<th>kellaaeg</th>";
-		$html .= "<th></th>";
-	$html .= "</tr>";
+	$html2 .= "<tr>";
+		$html2 .= "<th>pealkiri</th>";
+		$html2 .= "<th>komment</th>";
+		$html2 .= "<th>kategooria</th>";
+		$html2 .= "<th>kellaaeg</th>";
+		$html2 .= "<th></th>";
+	$html2 .= "</tr>";
 	
 	foreach ($postitused as $p) {
-	$html .= "<tr>";
-		$html .= "<td>".$p->pealkiri."</td>";
-		$html .= "<td>".$p->komment."</td>";
-		$html .= "<td>".$p->kategooria."</td>";
-		$html .= "<td>".$p->kellaaeg."</a></td>";
-	$html .= "</tr>";
+	$html2 .= "<tr>";
+		$html2 .= "<td>".$p->pealkiri."</td>";
+		$html2 .= "<td>".$p->komment."</td>";
+		$html2 .= "<td>".$p->kategooria."</td>";
+		$html2 .= "<td>".$p->kellaaeg."</a></td>";
+		$html2 .= "<td><a href='changepost.php?id=".$p->id."'>Muuda kommentaari</a></td>";
+	$html2 .= "</tr>";
 	}
 
-	$html .= "</table>";
+	$html2 .= "</table>";
 	
-echo $html
+echo $html2
 ?>

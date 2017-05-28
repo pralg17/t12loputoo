@@ -73,7 +73,7 @@
 	//TABELID
 		
 		//POSTITUSE TABLE
-			function postinfo(){$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+		function postinfo(){$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 			
 			$stmt = $mysqli->prepare("
 			SELECT id, pealkiri, komment, kategooria, kellaaeg, kasutaja
