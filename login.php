@@ -4,9 +4,16 @@
 	require("../config.php");
 	require("function.php");
 	
+	//SISSE
+	//SESSION
+	if (isset($_SESSION["userId"]))
+	{
+		header("Location: chatpage.php");
+	}
+	
 	//MUUTUAJD
 	$regKasutaja = $regKasutajaError = $regParool = $regParoolError = $regSugu = "" ;
-	$logKasutaja = $logKasutajaError = $logParool = $logParoolError = "";
+	$logKasutaja = $logKasutajaError = $logParool = $logParoolError = $error = "";
 	
 	//KASUTAJA REGISTREERIMINE
 	//KASUTAJA
@@ -48,19 +55,29 @@
 		} 
 	}
 	
-	//REGISTREERIMISE LÕPP
-	if ( $regKasutajaError == "" AND
-		$regParoolError == "" &&
-		isset($_POST["regKasutaja"]) &&
-		isset($_POST["regParool"])
-	)
-	if (isset($_POST["regKasutaja"])&&
-		!empty($_POST["regParool"])
+		//REGISTREERIMISE LÕPP
+		if ( $regKasutajaError == "" AND
+			$regParoolError == "" &&
+			isset($_POST["regKasutaja"]) &&
+			isset($_POST["regParool"])
 		)
+		if (isset($_POST["regKasutaja"])&&
+			!empty($_POST["regParool"])
+			)
 		//SALVESTAMINE JA FUNKTSIOON
 		{
 		$regParool = hash("sha512", $_POST["regParool"]);
 		registration($regKasutaja, $regParool, $_POST["regSugu"]);
+		}
+		
+		//LOOGIMISE LQPP
+		if (isset ($_POST["logKasutaja"]) &&
+			isset ($_POST["logParool"])  &&
+			!empty ($_POST["logKasutaja"]) &&
+			!empty ($_POST["logParool"])
+		)
+		{
+		$error = login($_POST["logKasutaja"], $_POST["logParool"]);
 		}
 		
 ?>
@@ -76,48 +93,51 @@
 		<body>
 			<center>
 	
-				<h1>Logi sisse</h1>
-				<form method="POST" >
-				
-					<input name="logKasutaja" type = "logKasutaja" placeholder="Kasutaja" value="<?=$logKasutaja;?>"><br>
-					<font color="red"><?php echo $logKasutajaError; ?></font></br>
+				<div class="Sisse loogimine">
+					<h1>Logi sisse</h1>
+					<form method="POST" >
 					
-					<input name="logParool" type = "password" placeholder="Parool"><br> 
-					<font color="red"><?php echo $logParoolError; ?></font><br>
+						<?=$error;?>
+						<br><label for="logKasutaja">Kasutaja</label></br>
+						<input name="logKasutaja" type = "logKasutaja" placeholder="Kasutaja" value="<?=$logKasutaja;?>"><br>
+						<font color="red"><?php echo $logKasutajaError; ?></font></br>
+						
+						<br><label for="logParool">Parool</label></br>
+						<input name="logParool" type = "password" placeholder="Parool"><br> 
+						<font color="red"><?php echo $logParoolError; ?></font><br>
+						
+						<input type="submit" value="Logi sisse">
 					
-					<input type="submit" value="Logi sisse">
-				
-				</form>
+					</form>
+				</div>
 
 				
-				<h1>Loo kasutaja</h1>
-				<form method="POST" >
+				<div class="Registreerimine">
+					<h1>Loo kasutaja</h1>
+					<form method="POST" >
+						
+						<br><label for="regKasutaja">Kasutaja</label></br>
+						<input name="regKasutaja" placeholder="Kasutaja" value="<?=$regKasutaja;?>"> 
+						<br><font color="red"><?php echo $regKasutajaError; ?></font></br>
+						
+						<br><label for="regParool">Parool</label></br>
+						<input name="regParool" type = "password" placeholder="Parool"> 
+						<br><font color="red"><?php echo $regParoolError; ?></font></br>
+						
+						<p><label for="regSugu">Sugu:</label><br>
+						<select name = "regSugu"  id="regSugu" required><br><br>
+						<option value="">Näita</option>
+						<option value="Mees">Mees</option>
+						<option value="Naine">Naine</option>
+						<option value="Muu">Muu</option>
+						</select><br><br>
+						
+					<input type="submit" value="Loo kasutaja">
+						
+					</form>
+				</div>
 				
-					<label></label><br>	
-					
-					<br><label for="regKasutaja">Kasutaja</label></br>
-					<input name="regKasutaja" placeholder="Kasutaja" value="<?=$regKasutaja;?>"> 
-					<br><font color="red"><?php echo $regKasutajaError; ?></font></br>
-					
-					<br><label for="regParool">Parool</label></br>
-					<input name="regParool" type = "password" placeholder="Parool"> 
-					<br><font color="red"><?php echo $regParoolError; ?></font></br>
-					
-					<p><label for="regSugu">Sugu:</label><br>
-					<select name = "regSugu"  id="regSugu" required><br><br>
-					<option value="">Näita</option>
-					<option value="Mees">Mees</option>
-					<option value="Naine">Naine</option>
-					<option value="Muu">Muu</option>
-					</select><br><br>
-					
-				<input type="submit" value="Loo kasutaja">
-					
-				</form>
-				</center>	
-				
-			
+			</center>
 		</body>
-		
 
 </html>
