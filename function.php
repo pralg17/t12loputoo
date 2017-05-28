@@ -147,4 +147,51 @@
 			$stmt->close();
 			return $singleId;
 		}
+		
+		//SAADA KOMMENTAARE
+		function kommentaar($tagasiside){
+		
+			$mysqli = new mysqli($GLOBALS["serverHost"], 
+			$GLOBALS["serverUsername"], 
+			$GLOBALS["serverPassword"], 
+			$GLOBALS["database"]);
+			
+			$tagasiside = $_POST["tagasiside"];
+			
+			$stmt = $mysqli ->prepare("INSERT INTO loputoo_komment (tagasiside, kasutaja, post_id) VALUE(?, ?, ?)");
+			echo $mysqli->error;
+			$stmt->bind_param("ssi", $tagasiside, $_SESSION["userKasutaja"],$_GET["id"]);
+		
+			if($stmt->execute() ) {			
+			}
+		}
+		
+		//NÄITAB KOMMENTARI IGA POSTITUSE
+			function kommentaarinfo(){
+			
+			$mysqli = new mysqli($GLOBALS["serverHost"], 
+			$GLOBALS["serverUsername"], 
+			$GLOBALS["serverPassword"], 
+			$GLOBALS["database"]);
+			
+			$stmt = $mysqli->prepare("
+			SELECT tagasiside, kasutaja, kellaaeg
+			FROM loputoo_komment
+			WHERE post_id = ?
+			");
+			
+			$stmt->bind_param("s", $_GET["id"]);
+			$stmt->bind_result($tagasiside, $kasutaja, $kellaaeg );
+			$stmt->execute();
+			$results = array();
+			
+			while ($stmt->fetch()) {
+				$comment = new StdClass();
+				$comment->tagasiside = $tagasiside;
+				$comment->kasutaja = $kasutaja;
+				$comment->kellaaeg = $kellaaeg;
+				array_push($results, $comment);	
+			}
+			return $results;
+		}
 ?>
