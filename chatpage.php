@@ -22,7 +22,7 @@
 	postitus($_POST["Pealkiri"],$_POST["Kommentaar"], $_POST["Kategooria"], $_SESSION["userKasutaja"]);
 	}
 	
-	$people = kasutajainfo();
+	$postitus = postinfo();
 ?>
 
 <html>
@@ -66,3 +66,32 @@
 		
 	</body>
 </html>
+
+<?php 
+$html = "<table>";
+	
+	$html .= "<tr>";
+		$html .= "<th>Postituse ID</th>";
+		$html .= "<th>pealkiri</th>";
+		$html .= "<th>komment</th>";
+		$html .= "<th>kategooria</th>";
+		$html .= "<th>kellaaeg</th>";
+		$html .= "<th>kasutaja</th>";
+		$html .= "<th></th>";
+	$html .= "</tr>";
+	
+	foreach ($postitus as $p) {
+	$html .= "<tr>";
+		$html .= "<td>".$p->id."</td>";
+		$html .= "<td>".$p->pealkiri."</td>";
+		$html .= "<td>".$p->komment."</td>";
+		$html .= "<td>".$p->kategooria."</a></td>";
+		$html .= "<td>".$p->kellaaeg."</td>";
+		$html .= "<td>".$p->kasutaja."</a></td>";
+	$html .= "</tr>";
+	}
+
+	$html .= "</table>";
+	
+echo $html
+?>

@@ -93,4 +93,28 @@
 			}
 			return $results;
 		}
+		
+		//POSTITUSE TABLE
+			function postinfo(){$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+			
+			$stmt = $mysqli->prepare("
+			SELECT id, pealkiri, komment, kategooria, kellaaeg, kasutaja
+			FROM loputoo_post ");
+			
+			$stmt->bind_result($id, $pealkiri, $komment, $kategooria, $kellaaeg, $kasutaja);
+			$stmt->execute();
+			
+			$results = array();
+			while ($stmt->fetch()) {
+				$postitus = new StdClass();
+				$postitus->id = $id;
+				$postitus->pealkiri = $pealkiri;
+				$postitus->komment = $komment;
+				$postitus->kategooria = $kategooria;
+				$postitus->kellaaeg = $kellaaeg;
+				$postitus->kasutaja = $kasutaja;
+				array_push($results, $postitus);	
+			}
+			return $results;
+		}
 ?>
