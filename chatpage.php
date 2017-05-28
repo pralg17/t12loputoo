@@ -88,6 +88,7 @@ $html = "<table>";
 		$html .= "<td>".$p->kategooria."</a></td>";
 		$html .= "<td>".$p->kellaaeg."</td>";
 		$html .= "<td>".$p->kasutaja."</a></td>";
+		$html .= "<td><a href='comment.php?id=".$p->id."'>Vasta</a></td>";
 	$html .= "</tr>";
 	}
 

@@ -117,4 +117,34 @@
 			}
 			return $results;
 		}
+		
+		//NÄITAB ÜHE POSTITUSE KOGU INFOT
+			function getsingleId($show_id){
+			
+			$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+			
+			$stmt = $mysqli->prepare("
+			SELECT pealkiri, komment, kategooria, kellaaeg, kasutaja
+			FROM loputoo_post 
+			WHERE id = ?");
+			
+			$stmt->bind_param("i", $show_id);
+			$stmt->bind_result($pealkiri, $komment, $kategooria , $kellaaeg, $kasutaja);
+			$stmt->execute();
+
+			$singleId = new Stdclass();
+			
+			if($stmt->fetch()){
+				$singleId->pealkiri = $pealkiri;
+				$singleId->komment = $komment;
+				$singleId->kategooria = $kategooria;
+				$singleId->kellaaeg = $kellaaeg;
+				$singleId->kasutaja = $kasutaja;
+			}else{
+				header("Location: chatpage.php");
+				exit();
+			}
+			$stmt->close();
+			return $singleId;
+		}
 ?>
