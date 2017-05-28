@@ -3,6 +3,35 @@
 	//FUNKTSIOONID
 	require("function.php");
 	
+	//NÄITAB ÜHE KASUTAJA INFOT
+	function kasutajainfo(){
+		
+		$mysqli = new mysqli($GLOBALS["serverHost"], 
+		$GLOBALS["serverUsername"], 
+		$GLOBALS["serverPassword"], 
+		$GLOBALS["database"]);
+		
+		$stmt = $mysqli->prepare("
+		SELECT id, kasutaja, sugu
+		FROM loputoo_kasutaja
+		WHERE kasutaja = ?
+		");
+		
+		$stmt->bind_param("s", $_SESSION["userKasutaja"]);
+		$stmt->bind_result($id, $kasutaja, $sugu);
+		$stmt->execute();
+		$results = array();
+		
+		while ($stmt->fetch()) {
+			$kasutajainf = new StdClass();
+			$kasutajainf->id = $id;
+			$kasutajainf->kasutaja = $kasutaja;
+			$kasutajainf->sugu = $sugu;
+			array_push($results, $kasutajainf);	
+		}
+		return $results;
+	}
+	
 	//NÄITAB KASUTAJA KOMMENTAARID
 	function kommentaaridinfo(){
 		
@@ -79,7 +108,6 @@ $html = "<table>";
 		$html .= "<th>Kasutaja ID</th>";
 		$html .= "<th>Kasutaja</th>";
 		$html .= "<th>Sugu</th>";
-		$html .= "<th>Kellaaeg</th>";
 		$html .= "<th></th>";
 	$html .= "</tr>";
 	
@@ -88,7 +116,6 @@ $html = "<table>";
 		$html .= "<td>".$p->id."</td>";
 		$html .= "<td>".$p->kasutaja."</td>";
 		$html .= "<td>".$p->sugu."</td>";
-		$html .= "<td>".$p->timestamp."</a></td>";
 	$html .= "</tr>";
 	}
 
