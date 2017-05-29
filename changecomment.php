@@ -53,6 +53,32 @@
 			uuendaKomm($_POST["tagasiside"]);
 			exit();	
 		}
+	
+	//KOMMENTAARI KUSTUTAMIE
+	function deletekomment($id){
+		
+		$mysqli = new mysqli($GLOBALS["serverHost"], 
+		$GLOBALS["serverUsername"], 
+		$GLOBALS["serverPassword"], 
+		$GLOBALS["database"]);		
+		
+		$stmt = $mysqli->prepare("
+		DELETE from loputoo_komment WHERE id=?");
+		$stmt->bind_param("i", $id);
+
+		if($stmt->execute()){
+			echo "salvestus хnnestus!";
+		}
+		
+		$stmt->close();
+		
+	}
+	
+	if(isset($_GET["delete"])){
+		deletekomment($_GET["id"]);
+		header("Location: user_info.php");
+		exit();
+	}
 		
 
 	$p = getsingleId3($_GET["id"]);
@@ -72,6 +98,8 @@
 				<input id="tagasiside" name="tagasiside" class="text" value="<?php echo $p->tagasiside;?>" required> <br>
 				
 				<input type="submit" name="uuendaKomm" value="Uuenda">
+				
+				<a href="?id=<?=$_GET["id"];?>&delete=true">kustuta</a>
 				
 				</form>
 			</center>
