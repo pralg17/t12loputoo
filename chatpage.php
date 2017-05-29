@@ -23,7 +23,24 @@
 	postitus($_POST["Pealkiri"],$_POST["Kommentaar"], $_POST["Kategooria"], $_SESSION["userKasutaja"]);
 	}
 	
-	$postitus = postinfo();
+	//SORTIREERIMINE JA OTSING
+	if (isset($_GET["q"])) {
+		$q = $_GET["q"];
+	
+	} else {
+		//otsing ei toimu
+		$q = "";
+	}
+	//Kui midagi pole vajutatud
+	$sort = "kasutaja";
+	$order = "ASC";
+	
+	if (isset($_GET["sort"]) && isset($_GET["order"])) {
+		$sort = $_GET["sort"];
+		$order = $_GET["order"];
+	}
+	
+	$postitus = postinfo($q, $sort, $order);
 ?>
 
 <html>
@@ -64,6 +81,13 @@
 	
 		<a href="?logout=1">LOGI VÄLJA</a>
 		<a href="user_info.php">MINU ANDMED</a>
+		
+		<br><br>
+		
+		<form>
+		<input type="text" name="q" value="<?=$q;?>" placeholder="Otsi postituses">
+		<input type="submit" value="Otsi postituse">
+		</form>
 		
 		<h1>Video-mängude foorum: </h1>
 

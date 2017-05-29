@@ -73,16 +73,52 @@
 	//TABELID
 		
 		//POSTITUSE TABLE
-		function postinfo(){$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
-			
-			$stmt = $mysqli->prepare("
+		function postinfo($q, $sort, $order){
+		$mysqli = new mysqli($GLOBALS["serverHost"],
+		$GLOBALS["serverUsername"],
+		$GLOBALS["serverPassword"],
+		$GLOBALS["database"]);
+		 
+		$allowedSort = ["id", "pealkiri", "komment", "kategooria","kellaaeg", "kasutaja"];
+		
+		if(!in_array($sort, $allowedSort)){
+			$sort = "pealkiri";}
+		
+		$orderBy = "ASC";	
+		
+		if($order == "DESC"){
+			$orderBy = "DESC";}
+		//OTSING
+		
+		if ($q != "") {
+		$stmt = $mysqli->prepare("
 			SELECT id, pealkiri, komment, kategooria, kellaaeg, kasutaja
-			FROM loputoo_post ");
+			FROM loputoo_post
+			WHERE id LIKE ? 
+			OR pealkiri LIKE ?
+			OR komment LIKE ?
+			OR kategooria LIKE ?
+			OR kellaaeg LIKE ?
+			OR kasutaja LIKE ?
+			ORDER BY $sort $orderBy
+			");
+			
+		$searchWord = "%".$q."%";
+		$stmt->bind_param("ssssss",$searchWord, $searchWord, $searchWord, $searchWord, $searchWord, $searchWord );
+		
+		} else {
+		//otsing ei toimu
+		$stmt = $mysqli->prepare("
+			SELECT id, pealkiri, komment, kategooria, kellaaeg, kasutaja 
+			FROM loputoo_post
+			ORDER BY $sort $orderBy
+			");
+		}
 			
 			$stmt->bind_result($id, $pealkiri, $komment, $kategooria, $kellaaeg, $kasutaja);
 			$stmt->execute();
-			
 			$results = array();
+			
 			while ($stmt->fetch()) {
 				$postitus = new StdClass();
 				$postitus->id = $id;
