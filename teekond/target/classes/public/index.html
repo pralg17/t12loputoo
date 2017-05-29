@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+  <head>
+	<meta charset="UTF-8">
+    <title>Vahemaade kalkulaator</title>
+	<script src="scripts.js"></script>
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+ </head>
+ <header class="w3-container w3-center">
+	<h4>Teekonna pikkuse ja kellaaegade kalkulaator </h4>
+ </header>
+ 
+
+  <body class="w3-content"  style="max-width:1000px">
+	<div>		
+<!--  TEEKOND -->
+<table class="w3-table">
+
+	<div id="teekonnavalik" >
+	
+		<tr>
+			<td>
+				<button onclick="lisaTeekond()">Uus teekond</button>
+				<br><br>
+			</td>
+			<td>
+				<p id="sisestateekond"> Loo uus teekond</p>
+			</td>
+		</tr>
+	</div>
+<!--  KIIRUS-->
+	<div id="kiirusevalik">
+		<tr class="w3-border-top">
+			<td>
+				<input id="kmh" type="text" placeholder="km/h"/>
+				<br><br>
+			</td>
+			<td><p id= "sisestakiirus">Sisesta keskmine kiirus</p></td>
+		</tr>
+		<tr>
+			<td>
+				<input type="checkbox" id="ms" /> m/s 
+				<br><br>
+				<button id="kiirusenupp" onclick="lisaKiirus()">Lisa kiirus</button>
+			</td>
+			<td></td>
+		</tr>
+
+	</div>
+	
+<!--  ALGUSAEG -->	
+	<div id="stardivalik">
+	<form>
+		<tr class="w3-border-top">
+			<td>
+				<input max="2050" min="1970" id="aasta" type="number" placeholder="aasta" />
+				<input max="12" min="1" id="kuu" type="number" placeholder="kuu" />
+				<input max="31" min="1" id="kuupäev" type="number" placeholder="kuupäev" />
+				<br><br>
+			</td>
+			<td><p id= "sisestastart">Vali teekonnale algusaeg</p></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<input max="23" min="00" id="tund" type="number" placeholder="tund" /> 
+				<input max="59" min="00" id="minut" type="number" placeholder="minut" />
+				<br><br>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input id="praegu" type="checkbox" />Käesolev aeg
+				<br><br>
+				<button id="ajanupp" onclick="lisaAeg()">Lisa aeg</button>
+			</td>
+			<td></td>
+		</tr>
+	</form>		
+	</div>	
+
+				
+<!--  KOHAD -->	
+	<div id="kohavalik" >	
+		
+		<tr class="w3-border-top">
+			<td>
+				<input id="kohanimi" type="text" placeholder="Kohanimi" />
+				<br><br>
+			</td>
+			<td><p id="sisestakoht">Lisa läbitavad kohad</p></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<input id="lat" type="text" placeholder="59.436962" /> 
+				<input id="lon" type="text" placeholder="24.753574" />
+				<span style="font-size:80%;">Laius- ja pikkuskraad</span>
+				<br><br>
+			</td>	
+		</tr>
+		<tr>
+			<td>
+				<button onclick="lisaKoht()">Lisa koht</button>
+			</td>
+			<td></td>	
+		</tr>		
+	</div>
+	
+</div>		
+</table>		
+<br>	
+
+<!-- TABEL -->
+	<table  class="w3-table w3-striped">
+	     <thead>
+			<tr>
+				<th></th>
+				<th>KESKMINE KIIRUS</th>
+				<th>TEEKONNA PIKKUS</th>
+				<th>AEG KOKKU</th>
+				<th>KELLAAJAD</th>
+				<th></th>
+			</tr>
+		  </thead>
+		  <tbody id="andmed"></tbody>
+	</table>
+	
+</div>
+
+</body>
+
+</html>

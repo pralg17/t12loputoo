@@ -1,0 +1,22 @@
+CREATE TABLE teekond(
+  tk_id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  aeg_kokku VARCHAR(255),
+  kell_igas_punktis VARCHAR(500),
+  kiirus DOUBLE(17,1),
+  start TIMESTAMP,
+  teekonna_pikkus DOUBLE(17,1) 
+);
+
+CREATE TABLE koht(
+   koht_id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   lat DOUBLE(17,1) NOT NULL,
+   lat_kraadides DOUBLE(17,1) NOT NULL,
+   lon DOUBLE(17,1) NOT NULL,
+   lon_kraadides DOUBLE(17,1) NOT NULL,
+   nimi VARCHAR(255),
+   tk_id INT(10),
+   FOREIGN KEY(tk_id) REFERENCES teekond(tk_id)
+);
+
+
+
