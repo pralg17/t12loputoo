@@ -64,7 +64,6 @@
 		echo $mysqli->error;
 		$stmt->bind_param("ssss",$pealkiri, $komment , $kategooria, $_SESSION["userKasutaja"]);
 		if ( $stmt->execute() ) {
-			echo "Хnnestus!";
 		} else {
 			echo "ERROR ".$stmt->error;
 			}	
@@ -82,7 +81,7 @@
 		$allowedSort = ["id", "pealkiri", "komment", "kategooria","kellaaeg", "kasutaja"];
 		
 		if(!in_array($sort, $allowedSort)){
-			$sort = "pealkiri";}
+			$sort = "kellaaeg";}
 		
 		$orderBy = "ASC";	
 		

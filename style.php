@@ -22,11 +22,6 @@
 		color: white;
 	}
 	
-	div {
-		margin-top:5%;
-		padding: 20px;
-	}
-	
 	input[type=submit]{
 		background-color: #FFB642;
 		border-radius: 12px;

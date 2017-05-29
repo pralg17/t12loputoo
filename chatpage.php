@@ -32,7 +32,7 @@
 		$q = "";
 	}
 	//Kui midagi pole vajutatud
-	$sort = "kasutaja";
+	$sort = "kellaaeg";
 	$order = "ASC";
 	
 	if (isset($_GET["sort"]) && isset($_GET["order"])) {
@@ -82,13 +82,7 @@
 	
 		<a href="?logout=1">LOGI VÄLJA</a>
 		<a href="user_info.php">MINU ANDMED</a>
-		
-		<br><br>
-		
-		<form>
-		<input type="text" name="q" value="<?=$q;?>" placeholder="Otsi postituses">
-		<input type="submit" value="Otsi postituse">
-		</form>
+
 		
 <h1>Kasutaja kokku postitused: </h1>		
 <?php 
@@ -96,7 +90,7 @@ $html1 = "<table>";
 	
 	$html1 .= "<tr>";
 		$html1 .= "<th>Kasutaja</th>";
-		$html1 .= "<th>Kokku</th>";
+		$html1 .= "<th>Kokku posts</th>";
 	$html1 .= "</tr>";
 	
 	foreach ($kokku as $p) {
@@ -110,6 +104,12 @@ $html1 = "<table>";
 	
 echo $html1
 ?>
+		<br><br>
+		
+		<form>
+		<input type="text" name="q" value="<?=$q;?>" placeholder="Otsi postituses">
+		<input type="submit" value="Otsi postituse">
+		</form>
 		
 <h1>Video-mängude foorum: </h1>
 <?php 
