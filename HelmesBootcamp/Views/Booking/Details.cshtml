@@ -1,0 +1,71 @@
+﻿@model HelmesBootcamp.Models.DbBooking
+
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Booking details</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DbGarages.GarageName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DbVehicles.TypeOfVehicle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LicensePlateNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CustomersPhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TyreHotel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Information)
+        </th>
+    </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(model => model.DbGarages.GarageName)
+        </td>
+ 
+        <td>
+            @Html.DisplayFor(model => model.StartDateTime)
+        </td>
+  
+        <td>
+            @Html.DisplayFor(model => model.EndTime)
+        </td>
+
+        <td>
+            @Html.DisplayFor(model => model.DbVehicles.TypeOfVehicle)
+        </td>
+
+        <td>
+            @Html.DisplayFor(model => model.LicensePlateNumber)
+        </td>
+
+        <td>
+            @Html.DisplayFor(model => model.CustomersPhoneNumber)
+        </td>
+
+        <td>
+            @Html.DisplayFor(model => model.TyreHotel)
+        </td>
+
+        <td>
+            @Html.DisplayFor(model => model.Information)
+        </td>
+    </tr>
+</table>
+

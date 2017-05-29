@@ -1,0 +1,66 @@
+﻿@model HelmesBootcamp.Models.DbBooking
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary("The following errors were found:", new { @class = "alert alert-danger" })
+
+    <fieldset>
+        <h1>@ViewBag.Title</h1>
+        <div class="row">
+            <div class="col-md-6">
+
+                <div class="form-group">
+
+                    @Html.LabelFor(model => model.DbGarages.GarageName, new { @class = "control-label", @for = "booking-garage-name" })
+                    @Html.DropDownListFor(model => model.DbGaragesId, (SelectList)ViewBag.garageList, new { @class = "form-control", @id = "booking-garage-name" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DbVehicles.TypeOfVehicle, new { @class = "control-label", @for = "booking-type-of-vehicle" })
+                    @Html.DropDownListFor(model => model.DbVehiclesId, (SelectList)ViewBag.vehicleList, new { @class = "form-control", @id = "booking-type-of-vehicle", onchange = "copyTextValue(this)" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.StartDateTime, new { @class = "control-label", @for = "booking-start-date-time" })
+                    @Html.TextBoxFor(model => model.StartDateTime, "{0:dd.MM.yyyy HH:mm}", new { @class = "form-control", @id = "booking-start-date-time", onchange = "copyTextValue(this)" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.EndTime, new { @class = "control-label", @for = "booking-end-time" })
+                    @Html.TextBoxFor(model => model.EndTime, new { @class = "form-control", @id = "booking-end-time", @readonly = true })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LicensePlateNumber, new { @class = "control-label", @for = "booking-license-plate-number" })
+                    @Html.TextBoxFor(model => model.LicensePlateNumber, new { @class = "form-control", @id = "booking-license-plate-number" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CustomersPhoneNumber, new { @class = "control-label", @for = "customers-phone-numbers" })
+                    @Html.TextBoxFor(model => model.CustomersPhoneNumber, new { @class = "form-control", @id = "booking-customers-phone-number" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TyreHotel, new { @class = "control-label", @for = "booking-tyre-hotel" })
+                    @Html.CheckBoxFor(model => model.TyreHotel, new { @id = "booking-tyre-hotel" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Information, new { @class = "control-label", @for = "booking-information" })
+                    @Html.TextAreaFor(model => model.Information, 15, 20, new { @class = "form-control", @id = "booking-information" })
+                </div>
+                <p>
+                    <input class="btn btn-primary" type="submit" value="Submit" id="booking-submit">
+                </p>        
+            </div>
+        </div>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index",null,new { @id = "booking-back-to-list"})
+</div>
