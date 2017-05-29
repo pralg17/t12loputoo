@@ -30,14 +30,14 @@ public class ToidukalkulaatorApplication {
 			"Kaloreid: "+toit.kalorid*kogus+"<br>"+
 			"Sysivesikuid: "+toit.sysivesikud*kogus+"<br>"+
 			"Valke: "+toit.valk*kogus+"<br>"+
-			"Rasve: "+toit.rasv*kogus+"<br>"+
-			"Nimi: "+uustoitkogus+"<br>";
+			"Rasve: "+toit.rasv*kogus+"<br>";
+			//"Nimi: "+uustoitkogus+"<br>";
 		}
 		return "Sellist toiduainet ei ole andmebaasis";
 	}
 
 	public static void main(String[] args) {
-		System.getProperties().put("server.port", 49891);
+		System.getProperties().put("server.port", 47859);
 		SpringApplication.run(ToidukalkulaatorApplication.class, args);
 	}
 }
@@ -47,4 +47,4 @@ public class ToidukalkulaatorApplication {
 //java -jar target/Toidukalkulaator-0.0.1-SNAPSHOT.jar
 //greeny.cs.tlu.ee:49891/lisa?toiduaine=banaan&kalorid=21&valk=5&rasv=3&sysivesikud=6
 //greeny.cs.tlu.ee:49891/leia?toiduaine=banaan&kogus=100
-//greeny.cs.tlu.ee:49891/home.html
+//greeny.cs.tlu.ee:47859/home.html
