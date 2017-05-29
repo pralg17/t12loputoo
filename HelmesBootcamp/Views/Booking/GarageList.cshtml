@@ -1,0 +1,65 @@
+﻿@model IEnumerable<HelmesBootcamp.Models.DbGarages>
+
+@{
+    ViewBag.Title = "Garage List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Add new garage", "CreateGarage", null, new { @id = "garages-add-new" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.GarageName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TyreHotel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Deleted)
+        </th>     
+    </tr>
+
+    @foreach (var item in Model)
+    {
+
+        var addTextDecoration = "";
+
+        if (item.Deleted != null)
+        {
+            addTextDecoration = "garages-deleted";
+        }
+        <tr class=@addTextDecoration>
+            <td>
+                @Html.DisplayFor(modelItem => item.GarageName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TyreHotel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Deleted)
+            </td>
+            <td>
+                <div class="pull-right">
+                    <a href="@Url.Action( "EditGarage" ,"Booking",new {  id = item.Id})"id="garages-edit-@item.Id" class="btn btn-warning btn-sm margin-right">
+                        <span class="glyphicon glyphicon-edit"></span><span class="hidden-xs"> Edit</span>
+                    </a>
+                    <a href="@Url.Action( "DeleteGarage" ,"Booking",new {  id = item.Id})"id="garages-edit-@item.Id" class="btn btn-danger btn-sm margin-right">
+                        <span class="glyphicon glyphicon-remove"></span><span class="hidden-xs"> Delete</span>
+                    </a>
+                    
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,58 @@
+﻿@model HelmesBootcamp.Models.DbGarages
+
+@{
+    ViewBag.Title = "Delete Garage";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="alert alert-danger">
+    Are you sure you want to cancel the following garage?
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="row">
+            <div class="col-xs-6 col-sm-5">
+                @Html.LabelFor(model => model.GarageName)
+            </div>
+            <div class="col-xs-6 col-sm-7">
+                @Model.GarageName
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6 col-sm-5">
+                @Html.LabelFor(model => model.Address)
+            </div>
+            <div class="col-xs-6 col-sm-7">
+                @Model.Address
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6 col-sm-5">
+                @Html.LabelFor(model => model.TyreHotel)
+            </div>
+            <div class="col-xs-6 col-sm-7">
+                @Model.TyreHotel
+            </div>
+        </div>
+
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="pad-top">
+                <button type="submit" class="btn btn-danger btn-lg margin-right" id="garages-delete-yes">
+                    <span class="glyphicon glyphicon-trash"></span> Yes
+                </button>
+                <a href="@Url.Action("Index")" class="btn btn-warning btn-lg" id="garages-delete-no">
+                    <span class="glyphicon glyphicon-remove"></span> No
+                </a>
+            </div>
+        }
+
+    </div>
+
+</div>

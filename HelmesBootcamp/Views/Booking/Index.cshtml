@@ -1,0 +1,83 @@
+﻿@model IEnumerable<HelmesBootcamp.Models.DbBooking>
+@{
+    ViewBag.Title = "Booking List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewBag.Title</h1>
+
+<p>
+    @Html.ActionLink("Add new booking", "Create",null,new { @id = "booking-add-new" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DbGarages.GarageName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DbVehicles.TypeOfVehicle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LicensePlateNumber)       
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Edited)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Canceled)
+        </th>
+    </tr>
+
+@foreach (var item in Model.OrderBy(i => i.StartDateTime)) {
+
+    var addTextDecoration = "";
+
+    if (item.Canceled != null)
+    {
+        addTextDecoration = "booking-canceled";
+    }
+    else if (item.Edited != null)
+    {
+        addTextDecoration = "booking-edited";
+    }
+    <tr class= @addTextDecoration>
+        <td>
+            @Html.DisplayFor(modelItem => item.DbGarages.GarageName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DbVehicles.TypeOfVehicle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LicensePlateNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Edited)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Canceled)
+        </td>
+        <td>
+            <div class="pull-right">
+              
+                <a href="@Url.Action( "Details" ,"Booking",new { id = item.Id})"id="booking-@item.Id" class="btn btn-info btn-sm margin-right">
+                    <span class="glyphicon glyphicon-search"></span><span class="hidden-xs"> View</span>
+                </a>
+                <a href="@Url.Action( "Edit" ,"Booking",new { id = item.Id})"id="booking-edit-@item.Id" class="btn btn-warning btn-sm margin-right">
+                    <span class="glyphicon glyphicon-edit"></span><span class="hidden-xs"> Edit</span>
+                </a>
+                <a href="@Url.Action( "Cancel" ,"Booking",new {  id = item.Id})"id="booking-cancel-@item.Id" class="btn btn-danger btn-sm margin-right">
+                    <span class="glyphicon glyphicon-remove"></span><span class="hidden-xs"> Cancel</span>
+                </a>
+
+            </div>
+        </td>
+    </tr>
+}
+
+</table>

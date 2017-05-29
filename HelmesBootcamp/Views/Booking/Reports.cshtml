@@ -1,0 +1,155 @@
+﻿@model IEnumerable<HelmesBootcamp.Models.DbBooking>
+@using System.Xml;
+
+@{
+    ViewBag.Title = "Weekly Bookings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@*
+        Stage IV a) - null :)
+        Stage IV b) - The user CAN'T pick, which week to display
+*@
+
+
+<h2>Bookings - All time</h2>
+<table class="table">
+        
+    @foreach (var garage in Model.GroupBy(garageName => garageName.DbGarages.GarageName))
+    {
+        <tr>           
+            <td>
+                @Html.DisplayFor(m => garage.Key)
+            </td>
+                                @foreach (var startDate in garage.
+                            GroupBy(day => new { day.StartDateTime.DayOfWeek })
+                            .Select(o => new { Count = o.Count(), Day = o.Key.DayOfWeek }).OrderBy(day => day.Day))
+                                {
+
+                                    switch (startDate.Day)
+                                    {
+                                        case DayOfWeek.Monday:
+                                            <td>
+                                                @startDate.Day:
+                                                @Html.DisplayFor(m => startDate.Count)
+                                            </td>
+                                            break;
+                                        case DayOfWeek.Tuesday:
+                                            <td>
+                                                @startDate.Day:
+                                                @Html.DisplayFor(m => startDate.Count)
+                                            </td>
+                                            break;
+                                        case DayOfWeek.Wednesday:
+                                            <td>
+                                                @startDate.Day:
+                                                @Html.DisplayFor(m => startDate.Count)
+                                            </td>
+                                            break;
+                                        case DayOfWeek.Thursday:
+                                            <td>
+                                                @startDate.Day:
+                                                @Html.DisplayFor(m => startDate.Count)
+                                            </td>
+                                            break;
+                                        case DayOfWeek.Friday:
+                                            <td>
+                                                @startDate.Day:
+                                                @Html.DisplayFor(m => startDate.Count)
+                                            </td>
+                                            break;
+                                        case DayOfWeek.Saturday:
+                                            <td>
+                                                @startDate.Day:
+                                                @Html.DisplayFor(m => startDate.Count)
+                                            </td>
+                                            break;
+                                        case DayOfWeek.Sunday:
+                                            <td>
+                                                @startDate.Day:
+                                                @Html.DisplayFor(m => startDate.Count)
+                                            </td>
+                                            break;
+                                    }
+                                }          
+            </tr>
+    }
+
+</table>
+
+@*
+    Stage VII b)
+*@
+
+<h2>Forecast</h2>
+<p>if it`s snowing, then a warning icon will be displayed for that day</p>
+@{
+
+
+    WebClient wc = new WebClient();
+    var url = wc.DownloadString("http://www.ilmateenistus.ee/ilma_andmed/xml/forecast.php?lang=eng");
+
+    XmlDocument xmlDoc = new XmlDocument();
+    xmlDoc.LoadXml(url);
+
+    XmlElement xRoot = xmlDoc.DocumentElement;
+
+    bool flagHarku = false;
+    bool flag = false;
+    int dayNumber = 1;
+}
+  
+<div>
+
+      @foreach (XmlNode xnode in xRoot)
+      {
+
+        <div id="day-@dayNumber">
+            <p>@xnode.Attributes.GetNamedItem("date").Value</p>
+
+            @foreach (XmlNode childnode in xnode.ChildNodes)
+            {
+                if (childnode.Name == "night" || childnode.Name == "day")
+                {
+                    foreach (XmlNode childnode2 in childnode.ChildNodes)
+                    {
+                        if (childnode2.Name == "place")
+                        {
+
+                            if (childnode2["name"].InnerText == "Harku")
+                            {
+                                if (!flagHarku)
+                                {
+                                    if (childnode2.InnerText.Contains("Heavy snowfall") || childnode2.InnerText.Contains("Heavy snow shower"))
+                                    {
+                                        flagHarku = true;
+                                        // @childnode2["phenomenon"].InnerText
+                                        <span class="glyphicon glyphicon-warning-sign"></span>
+
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                        if (dayNumber >= 2 && childnode2.Name == "phenomenon")
+                        {
+                            if (!flag)
+                            {
+                                if (childnode2.InnerText.Contains("Heavy snowfall") || childnode2.InnerText.Contains("Heavy snow shower"))
+                                {
+                                      flag = true;
+                                    //  @childnode2.InnerText
+                                    <span class="glyphicon glyphicon-warning-sign"></span>
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+         </div>
+                dayNumber++;
+                flag = false;
+            }
+        </div>
