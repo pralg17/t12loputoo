@@ -1,0 +1,25 @@
+<?php
+class User {
+	
+	private $connection;
+	public $name;
+	
+	function __construct($mysqli){
+		
+		//this viitab klassile (this == User)
+		$this->connection = $mysqli;
+		
+	}
+
+
+	//Teised klassid
+
+
+
+
+
+
+
+
+
+}?>
