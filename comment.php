@@ -42,7 +42,7 @@
 <?php 
 $html = "<table>";
 
-	$html .= "<tr>";
+	$html .= "<tr style='background-color: #FFB642'>";
 		$html .= "<td>".$p->pealkiri."</td>";
 		$html .= "<td>".$p->komment."</td>";
 		$html .= "<td>".$p->kategooria."</td>";

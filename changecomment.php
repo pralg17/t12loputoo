@@ -73,12 +73,12 @@
 		$stmt->close();
 		
 	}
-	
-	if(isset($_GET["delete"])){
-		deletekomment($_GET["id"]);
-		header("Location: user_info.php");
-		exit();
-	}
+		//KUI ISSET DELETE
+		if(isset($_GET["delete"])){
+			deletekomment($_GET["id"]);
+			header("Location: user_info.php");
+			exit();
+		}
 		
 
 	$p = getsingleId3($_GET["id"]);

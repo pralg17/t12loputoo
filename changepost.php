@@ -54,6 +54,31 @@
 			uuendaPost($_POST["pealkiri"], $_POST["komment"], $_POST["kategooria"]);
 			exit();	
 		}
+	
+	//POSTITUSE KUSTUTAMINE
+	function deletepost($id){
+		
+		$mysqli = new mysqli($GLOBALS["serverHost"], 
+		$GLOBALS["serverUsername"], 
+		$GLOBALS["serverPassword"], 
+		$GLOBALS["database"]);		
+		
+		$stmt = $mysqli->prepare("
+		DELETE from loputoo_post WHERE id=?");
+		$stmt->bind_param("i", $id);
+
+		if($stmt->execute()){
+		}
+		
+		$stmt->close();
+		
+	}
+		//KUI ISSET DELETE
+		if(isset($_GET["delete"])){
+			deletepost($_GET["id"]);
+			header("Location: user_info.php");
+			exit();
+		}
 
 	$p = getsingleId2($_GET["id"]);
 ?>
@@ -85,6 +110,8 @@
 				</select><br><br>
 				
 				<input type="submit" name="uuendaPost" value="Uuenda">
+				
+				<a href="?id=<?=$_GET["id"];?>&delete=true">kustuta</a>
 				
 				</form>
 			</center>
