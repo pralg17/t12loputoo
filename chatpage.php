@@ -41,6 +41,7 @@
 	}
 	
 	$postitus = postinfo($q, $sort, $order);
+	$kokku = kokkupost();
 ?>
 
 <html>
@@ -89,9 +90,28 @@
 		<input type="submit" value="Otsi postituse">
 		</form>
 		
-		<h1>Video-mängude foorum: </h1>
+<h1>Kasutaja kokku postitused: </h1>		
+<?php 
+$html1 = "<table>";
+	
+	$html1 .= "<tr>";
+		$html1 .= "<th>Kasutaja</th>";
+		$html1 .= "<th>Kokku</th>";
+	$html1 .= "</tr>";
+	
+	foreach ($kokku as $p) {
+	$html1 .= "<tr>";
+		$html1 .= "<td>".$p->kasutaja."</td>";
+		$html1 .= "<td>".$p->counting."</td>";
+	$html1 .= "</tr>";
+	}
 
-
+	$html1 .= "</table>";
+	
+echo $html1
+?>
+		
+<h1>Video-mängude foorum: </h1>
 <?php 
 $html = "<table>";
 	

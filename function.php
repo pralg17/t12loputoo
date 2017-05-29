@@ -1,4 +1,4 @@
-<?php	
+ï»¿<?php	
 
 	require("../config.php");
 	session_start();
@@ -64,7 +64,7 @@
 		echo $mysqli->error;
 		$stmt->bind_param("ssss",$pealkiri, $komment , $kategooria, $_SESSION["userKasutaja"]);
 		if ( $stmt->execute() ) {
-			echo "Õnnestus!";
+			echo "Ð¥nnestus!";
 		} else {
 			echo "ERROR ".$stmt->error;
 			}	
@@ -132,7 +132,7 @@
 			return $results;
 		}
 		
-		//NÄITAB ÜHE POSTITUSE KOGU INFOT
+		//NÐ”ITAB Ð¬HE POSTITUSE KOGU INFOT
 		function getsingleId($show_id){
 			
 			$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
@@ -180,7 +180,7 @@
 			}
 		}
 		
-		//NÄITAB KOMMENTARI IGA POSTITUSE
+		//NÐ”ITAB KOMMENTARI IGA POSTITUSE
 			function kommentaarinfo(){
 			
 			$mysqli = new mysqli($GLOBALS["serverHost"], 
@@ -208,4 +208,34 @@
 			}
 			return $results;
 		}
+		
+		//FUNKTSIOON LOEB KOKKU KUI PALJU POSTITUSI TEGI IGA USER
+			function kokkupost(){
+		
+			$mysqli = new mysqli($GLOBALS["serverHost"], 
+			$GLOBALS["serverUsername"], 
+			$GLOBALS["serverPassword"], 
+			$GLOBALS["database"]);
+			
+			$stmt = $mysqli->prepare("
+			SELECT kasutaja,
+			COUNT(*) FROM loputoo_post
+			GROUP by kasutaja 
+			");
+			
+			$stmt->bind_result($kasutaja,$COUNT);
+			$stmt->execute();
+			
+			$results = array();
+			while ($stmt->fetch()) {
+				
+				$kokku = new StdClass();
+				$kokku->kasutaja = $kasutaja;
+				$kokku->counting = $COUNT;
+
+				array_push($results, $kokku);	
+			}
+			return $results;
+		}
+		
 ?>
