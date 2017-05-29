@@ -73,6 +73,9 @@ function startPlay() {
     giveAIValue(AICreatureParts[i], types[i]);
   }
 
+  
+  
+  
   for(var j=0; j<types.length; j++) {
     AIPoints += valuate(valueCounter[types[j]], pTypes);
   }
@@ -80,7 +83,21 @@ function startPlay() {
   for(var k=0; k<types.length; k++) {
     playerPoints += valuate(valueCounter[pTypes[k]], types);
   }
+  
+  
+  
+  for(var l=0; l<types.length; l++) {
+    AIPoints += valuate2(valueCounter[types[l]], valueCounter[pTypes[l]]);
+  }
+  
+  for(var m=0; m<pTypes.length; m++) {
+    playerPoints += valuate2(valueCounter[pTypes[m]], valueCounter[types[m]]);
+  }
 
+  
+
+
+  
   console.log("AI points: " + AIPoints);
   console.log("player points: " + playerPoints);
 
@@ -129,6 +146,31 @@ function valuate(partValue, list) {
   }
   return points;
 }
+
+
+
+function valuate2(subjectPartValue, partValue) {
+  var points = 0;
+  if(subjectPartValue==1) {
+	if(partValue==2 || partValue===0) {
+    points += 1;
+	}
+  }
+  if(subjectPartValue==2) {
+	if(partValue==3 || partValue===0) {
+    points += 1;
+	}
+  }
+  if(subjectPartValue==3) {
+	if(partValue==1 || partValue===0) {
+    points += 1;
+	}
+  }
+  return points;
+}
+
+
+
 
 function refreshPage() {
   window.location.reload();
