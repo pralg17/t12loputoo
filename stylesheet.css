@@ -1,0 +1,178 @@
+body, html {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: url(background/22.png);
+}
+
+#player {
+  float:left;
+  height: 800px;
+  width: 800px;
+  margin-top: 100px;
+  margin-left: 100px;
+  background-color: #eee;
+  border-radius: 5px;
+}
+
+#playerScore {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  border-radius: 50px;
+  margin-left: 650px;
+  margin-top: 50px;
+  text-align: center;
+  line-height: 100px;
+  font-family: 'Rock Salt';
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  font-size: 2em;
+}
+
+.playerCreature {
+  position: absolute;
+  height: 200px;
+  width: 200px;
+  background-color: #404040;
+}
+
+#pHead {
+  margin-left: 300px;
+  margin-top: 90px;
+}
+
+#pLeftHand {
+  margin-left: 90px;
+  margin-top: 300px;
+}
+
+#pChest {
+  margin-left: 300px;
+  margin-top: 300px;
+}
+
+#pRightHand {
+  margin-left: 510px;
+  margin-top: 300px;
+}
+
+#pLeftLeg {
+  margin-left: 195px;
+  margin-top: 510px;
+}
+
+#pRightLeg {
+  margin-left: 405px;
+  margin-top: 510px;
+}
+
+.container {
+  float: right;
+  height: 800px;
+  width: 800px;
+  margin-top: 100px;
+  margin-right: 100px;
+}
+
+#AI {
+  width: 400px;
+  height: 400px;
+  margin-left: 200px;
+  margin-top: 90px;
+  background-color: #eee;
+  border-radius: 5px;
+}
+
+#AIScore {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+  margin-left: 25px;
+  margin-top: 25px;
+  text-align: center;
+  line-height: 50px;
+  font-family: 'Rock Salt';
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.AICreature {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  background-color: #404040;
+}
+
+#head {
+  margin-left: 150px;
+  margin-top: 45px;
+}
+
+#leftHand {
+  margin-left: 45px;
+  margin-top: 150px;
+}
+
+#chest {
+  margin-left: 150px;
+  margin-top: 150px;
+}
+
+#rightHand {
+  margin-left: 255px;
+  margin-top: 150px;
+}
+
+#leftLeg {
+  margin-left: 97px;
+  margin-top: 255px;
+}
+
+#rightLeg {
+  margin-left: 203px;
+  margin-top: 255px;
+}
+
+.interface {
+  height: 100px;
+  width: 500px;
+  margin: 120px 150px 90px 150px;
+}
+
+.btn {
+  width: 200px;
+  height: 100px;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 100px;
+  font-variant: small-caps;
+  font-weight: bold;
+  font-size: 2em;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+#refresh {
+  float: left;
+  background-color: #ff9900;
+}
+
+#play {
+  float: left;
+  margin-left: 100px;
+  background-color: #00e600;
+}
