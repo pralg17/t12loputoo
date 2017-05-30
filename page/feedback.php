@@ -23,6 +23,34 @@ if (isset($_GET["logout"])) {
 }
 
 
+ if ( isset($_POST["getFeedback"]) &&
+   !empty($_POST["getFeedback"])
+   ) {
+
+   echo $_POST["getFeedback"];
+   $feedback->getFeedback($Helper->cleaninput($_POST["getFeedback"]));
+
+ }
+
+ if(isset($_GET["r"])) {
+   $r = $_GET["r"];
+
+ } else {
+   //ei otsi
+   $r = "";
+ }
+
+ $sort = "id";
+ $order = "ASC";
+
+ if (isset($_GET["sort"]) && isset($_GET["order"])) {
+   $sort = $_GET["sort"];
+   $order = $_GET["order"];
+
+ }
+
+$feedback = $User->getFeedback($r, $sort, $order);
+
 ?>
 <?php require("../header.php"); ?>
 
@@ -55,8 +83,104 @@ if (isset($_GET["logout"])) {
 		$html = "<table class='table-striped table-condensed'>";
 		$html .= "<h2>Feedback</h2>";
 
+  		$html .= "<tr>";
+
+  			$orderID= "ASC";
+  			$arr="&darr;";
+
+  			if (isset($_GET["order"]) &&
+  			$_GET["order"] == "ASC" &&
+  			$_GET["sort"] == "id") {
+
+  				$orderID= "DESC";
+  				$arr="&uarr;";
+  			}
+
+  				$html .= "<th>
+  				<a href='?q=".$r."&sort=id&order=".$orderID."'>
+
+  				User ".$arr."
+  				</a>
+
+  				</th>";
+
+					//Start_time related
+
+						//Guest_id related
+	  				$orderRating = "ASC";
+						$arr="&darr;";
+	  				if (isset($_GET["order"]) &&
+	  				$_GET["order"] == "ASC" &&
+	  				$_GET["sort"] == "rating") {
+
+	  					$orderRating = "DESC";
+							$arr="&uarr;";
+
+	  				}
+
+	  					$html .= "<th>
+	  					<a href='?q=".$r."&sort=rating&order=".$orderRating."'>
+
+	  					Rating ".$arr."
+	  					</a>
+
+	  					</th>";
+
+							$orderFeedback= "ASC";
+							$arr="&darr;";
+							if (isset($_GET["order"]) &&
+							$_GET["order"] == "ASC" &&
+							$_GET["sort"] == "feedback") {
+
+								$orderFeedback= "DESC";
+								$arr="&uarr;";
+
+							}
+
+								$html .= "<th>
+								<a href='?q=".$r."&sort=feedback&order=".$orderFeedback."'>
+
+								Feedback".$arr."
+								</a>
+
+								</th>";
+
+								$orderAdded= "ASC";
+								$arr="&darr;";
+								if (isset($_GET["order"]) &&
+								$_GET["order"] == "ASC" &&
+								$_GET["sort"] == "added") {
+
+									$orderAdded = "DESC";
+									$arr="&uarr;";
+
+								}
+
+									$html .= "<th>
+									<a href='?q=".$r."&sort=added&order=".$orderAdded."'>
+
+									Added".$arr."
+									</a>
+
+									</th>";
 
 
+
+  		$html .= "</tr>";
+
+  		//iga liikme kohta massiivis
+  		foreach ($feedback as $r) {
+
+  			$html .= "<tr>";
+  				$html .= "<td>".$r->user_email."</td>";
+					$html .= "<td>".$r->rating."</td>";
+					$html .= "<td>".$r->feedback."</td>";
+					$html .= "<td>".$r->added."</td>";
+
+
+  			$html .= "</tr>";
+
+  		}
 
   	$html .= "</table>";
 		$html .= "</div>";
