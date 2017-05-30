@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "website"
 ]
 
 MIDDLEWARE = [
@@ -49,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'nltk.urls'
+ROOT_URLCONF = 'synmorf.urls'
 
 TEMPLATES = [
     {
@@ -62,12 +63,13 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'nltk.wsgi.application'
+WSGI_APPLICATION = 'synmorf.wsgi.application'
 
 
 # Database

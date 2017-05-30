@@ -1,0 +1,29 @@
+{% extends 'website/base.html' %}
+
+{% block content %}
+	<h1>Sisestage algtekst</h1>
+	<form method="POST" class="post-form">{% csrf_token %}
+		{{ form.as_p }}
+		<button type="submit" class="save btn btn-default">Save</button>
+	</form>
+
+	{% if lemmas %}
+		<h1>Enimkasutatud lemmad</h1>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Lemma</th>
+					<th>Kogus</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for lemma in lemmas %}
+					<tr>
+						<td>{{ lemma.0 }}</td>
+						<td>{{ lemma.1 }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% endif %}
+{% endblock %}
