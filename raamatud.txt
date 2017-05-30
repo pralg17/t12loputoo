@@ -1,0 +1,9 @@
+CREATE TABLE raamatud(
+title VARCHAR(30) NOT NULL PRIMARY KEY,
+author VARCHAR(30) NOT NULL,
+isbn INT(11)
+);
+
+INSERT INTO raamatud VALUES('The Hobbit and the Lord of the Rings', ' J.R.R. Tolkien', 0345538374);
+INSERT INTO raamatud VALUES('The Catcher in the Rye', 'J.D. Salinger', 0316769487);
+INSERT INTO raamatud VALUES('The Alchemist', 'Paulo Coelho',   0062315005);

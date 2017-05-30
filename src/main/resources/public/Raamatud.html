@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+	<head>
+	
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+		<title>Raamatud</title>
+		<script>
+			var connection = new XMLHttpRequest();
+			connection.onreadystatechange=data_here;
+			
+			function searchData(){
+			var v_title = document.getElementById("title_search").value;
+			
+			connection.open("GET", "/find?title="+v_title, true);
+			connection.send();
+			}
+			
+			function data_here(){
+			document.getElementById("Result").innerHTML=connection.responseText;
+			}
+			
+			function ShowAllData(){
+			connection.open("GET", "/showAll", true);
+			connection.send();
+			}
+			
+			function add_Data(){
+			var title = document.getElementById("n_raamatud_title").value;
+			var author = document.getElementById("n_raamatud_author").value;
+			var year = document.getElementById("n_raamatud_year").value;
+			var isbn = document.getElementById("n_raamatud_isbn").value;
+			var binding = document.getElementById("n_raamatud_binding").value;
+			var publisher = document.getElementById("n_raamatud_publisher").value;
+			var zanr = document.getElementById("n_raamatud_zanr").value;
+			connection.open("GET", "/addNewBook?title="+title+"&author="+author+"&year="+year+"&isbn="+isbn+"&binding="+binding+"&publisher="+publisher+"&zanr="+zanr, true);
+			connection.send();
+			}
+			
+			function delete_Data(){
+			var title = document.getElementById("title").value;
+			connection.open("GET", "/deleteBook?title="+title, true);
+			connection.send();
+			
+			
+			}
+			
+			
+		</script>
+	</head>
+	<body>
+		<div class="row"><div class="col-md-2 col-md-offset-0">
+		<h1>Otsing</h1>
+		<input type="text" id="title_search" />
+		<input type="button" value="Search" onclick="searchData()">
+		</div></div>
+		<br><br>
+		<div class="row"><div class="col-sm-6">
+		<h1>Andmebaasis olevad raamatud</h1>
+		<input type="button" value="Show" onclick="ShowAllData()">
+		<br><br>
+		<div id="Result"  > Raamatud </div>
+		
+		</div>
+		
+		
+		<div class="col-sm-6">
+		<h1>Lisa uus raamat</h1>
+		<input type="text" placeholder = "Pealkiri" id="n_raamatud_title" />
+		<br>
+		<br>
+		<input type="text" placeholder = "Autor" id="n_raamatud_author" />
+		<br>
+		<br>
+		<input type="text" placeholder = "Aasta" id="n_raamatud_year" />
+		<br>
+		<br>
+		<input type="text" placeholder = "ISBN" id="n_raamatud_isbn" />
+		<br>
+		<br>
+		<input type="text" placeholder = "Köide" id="n_raamatud_binding" />
+		<br>
+		<br>
+		<input type="text" placeholder = "Väljaandja" id="n_raamatud_publisher" />
+		<br>
+		<br>
+		<input type="text" placeholder = "Zanr" id="n_raamatud_zanr" />
+		<br>
+		<br>
+		<input type="button" value="Lisa" onclick="add_Data()">
+		
+		<br>
+		</div>
+		</div>
+		<div class ="row">
+		<div class="col-sm-6">
+		<h1> Kustuta raamat</h1>
+		<input type="text" placeholder = "Pealkiri" id="title" />'
+		<input type="button" value="Kustuta" onclick="delete_Data()">
+		</div>
+		</div>
+		
+	</body>
+	
+	</html>
+
+
+
