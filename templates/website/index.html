@@ -1,4 +1,5 @@
 {% extends 'website/base.html' %}
+{% load staticfiles %}
 
 {% block content %}
 	<h1>Sisestage algtekst</h1>
@@ -9,21 +10,36 @@
 
 	{% if lemmas %}
 		<h1>Enimkasutatud lemmad</h1>
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Lemma</th>
-					<th>Kogus</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for lemma in lemmas %}
+		<div>
+			<table class="table table-striped">
+				<thead>
 					<tr>
-						<td>{{ lemma.0 }}</td>
-						<td>{{ lemma.1 }}</td>
+						<th>Lemma</th>
+						<th>Kogus</th>
 					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					{% for lemma in lemmas %}
+						<tr>
+							<td>{{ lemma.0 }}</td>
+							<td>{{ lemma.1 }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+
+		<div>
+			<h1>Sõnaliigid</h1>
+			<img src="{% static "postags.png" %}">
+		</div>
+
+		<div>
+			<h1>Sõnavormid</h1>
+			<img src="{% static "word_forms.png" %}">
+		</div>
+
+
 	{% endif %}
 {% endblock %}
+

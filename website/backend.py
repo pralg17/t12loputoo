@@ -28,15 +28,15 @@ def count_lemmas(list_of_lemmas):
 # Sort järiestab suuremast-väiksemani, head võtab välja viis esimest tulemust.
 def make_postag_chart(dataframe):
 	df1 = dataframe.groupby('postag_descriptions').size().reset_index(name='counts').sort_values("counts", ascending=False).head(5)
-	plt.pie(df1["counts"], labels=df1["postag_descriptions"], shadow=False, startangle=90, autopct='%1.1f%%')
-	plt.tight_layout()
-	plt.savefig("postags.png")
-	plt.clf()  # Turvlisuse jaoks "puhatada kõik"
+	plt.pie(df1["counts"], labels=None, shadow=False, startangle=90, autopct='%1.1f%%')
+	plt.legend(df1["counts"], labels=df1["postag_descriptions"], loc="best")
+	plt.savefig("t12loputoo/website/static/postags.png")
+	plt.clf()  # Turvlisuse jaoks "puhasta kõik"
 	
 	
-def count_word_form(dataframe):
+def wordform_chart(dataframe):
 	df1 = dataframe.groupby('descriptions').size().reset_index(name='counts').sort_values("counts", ascending=False).head(5)
-	plt.pie(df1["counts"], labels=df1["descriptions"], shadow=False, startangle=90, autopct='%1.1f%%')
-	plt.tight_layout()
-	plt.savefig("word_forms.png")
-	plt.clf()  # Turvlisuse jaoks "puhatada kõik"
+	plt.pie(df1["counts"], labels=None, shadow=False, startangle=90, autopct='%1.1f%%')
+	plt.legend(df1["counts"], labels=df1["descriptions"], loc="best")
+	plt.savefig("t12loputoo/website/static/word_forms.png")
+	plt.clf()  # Turvlisuse jaoks "puhasta kõik"
