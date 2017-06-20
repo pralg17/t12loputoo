@@ -1,0 +1,155 @@
+{% load staticfiles %}
+{% load filter_tags %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>SYNMORF</title>
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/jszip-3.1.3/pdfmake-0.1.27/dt-1.10.15/b-1.3.1/b-colvis-1.3.1/b-html5-1.3.1/b-print-1.3.1/cr-1.3.3/fc-3.2.2/fh-3.1.2/kt-2.2.1/r-2.1.1/rg-1.0.0/rr-1.2.0/sc-1.4.2/se-1.2.2/datatables.min.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/jszip-3.1.3/pdfmake-0.1.27/dt-1.10.15/b-1.3.1/b-colvis-1.3.1/b-html5-1.3.1/b-print-1.3.1/cr-1.3.3/fc-3.2.2/fh-3.1.2/kt-2.2.1/r-2.1.1/rg-1.0.0/rr-1.2.0/sc-1.4.2/se-1.2.2/datatables.min.css"/>
+    <link rel="stylesheet" href="{% static '/website/style.css' %}">
+    <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body>
+<div class="page-header">
+    <h1><a href="/">SYNMORF</a></h1>
+</div>
+<div class="content container">
+    <div class="row">
+        <div class="container-fluid">
+            {% block content %}
+
+            {% endblock %}
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+
+<script>
+
+    var language = {
+        "sProcessing": "Palun oodake, koostan kuvamiseks nimekirja!",
+        "sLengthMenu": "N&auml;ita kirjeid _MENU_ kaupa",
+        "sZeroRecords": "Otsitavat vastet ei leitud.",
+        "sInfo": "Kuvatud: _TOTAL_ kirjet (_START_-_END_)",
+        "sInfoEmpty": "Otsinguvasteid ei leitud",
+        "sInfoFiltered": " - filteeritud _MAX_ kirje seast.",
+        "sInfoPostFix": "K&otilde;ik kuvatud kirjed p&otilde;hinevad reaalsetel tulemustel.",
+        "sSearch": "Otsi k&otilde;ikide tulemuste seast:",
+        "oPaginate": {
+            "sFirst": "Algus",
+            "sPrevious": "Eelmine",
+            "sNext": "J&auml;rgmine",
+            "sLast": "Viimane"
+        }
+    };
+
+
+    // #cancer
+    var lemmaTabel = $('#myTable').DataTable({
+        dom: 'lBfrtip',
+        buttons: ['print', 'csv', 'excel', 'pdf'],
+        language: language,
+        lengthMenu: [[50,100,1000,-1],[50,100,'1000','kõik']],
+        fixedHeader: true
+    });
+	var itallTable = $('#myTable4').DataTable({
+        dom: 'lBfrtip',
+        buttons: ['print', 'csv', 'excel', 'pdf'],
+        language: language,
+        lengthMenu: [[50,100,1000,-1],[50,100,'1000','kõik']],
+        fixedHeader: true
+
+    });
+
+
+    var sequenceTable = $('#myTable2').DataTable({
+        dom: 'lBfrtip',
+        buttons: ['print', 'csv', 'excel', 'pdf'],
+        language: language,
+        lengthMenu: [[50,100,1000,-1],[50,100,'1000','kõik']],
+        fixedHeader: true
+    });
+
+
+    var matrixTable = $('#myTable3').DataTable({
+        dom: 'lBfrtip',
+        buttons: ['print', 'csv', 'excel', 'pdf'],
+        language: language,
+        lengthMenu: [[50,100,1000,-1],[50,100,'1000','kõik']],
+        fixedHeader: true
+    });
+
+
+    jQuery(document).ready(function ($) {
+        $(".clickable-row3").each(function () {
+            $(this).click(function () {
+
+                $(this).css('background-color', 'pink');
+            });
+        });
+
+    });
+
+
+    window.onload = function () {
+        var fileInput = document.getElementById('fileInput');
+        var fileDisplayArea = document.getElementById('id_text');
+
+        fileInput.addEventListener('change', function (e) {
+            var file = fileInput.files[0];
+            var textType = /text.*/;
+
+            if (file.type.match(textType)) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    fileDisplayArea.innerText = reader.result;
+                };
+
+                reader.readAsText(file, "windows-1257")
+            } else {
+                fileDisplayArea.innerText = "Faili tüüp ei ole toetatud!";
+            }
+        });
+    };
+
+
+    function clicked(e) {
+        var value = $(e).attr('id');
+        console.log(value);
+        lemmaTabel.search(value).draw();
+        $(e).css('background-color', 'pink');
+    }
+
+    function clicked2(e) {
+        var value = $(e).attr('id');
+        console.log(value);
+        itallTable.search(value).draw();
+        $(e).css('background-color', 'pink');
+    }
+
+    function clicked3(e) {
+        $(e).css('background-color', 'pink');
+    }
+
+    $(document).ready(function () {
+        $('.btn-success').tooltip({
+            title: "Kui valisite N grami kõrgema kui 2 siis maatriksi kuvamisel võib browser kokku joosta. Vaikimisi ei kuvata maatriksi",
+            animation: true
+        });
+
+        $('.clickable-row').tooltip({title: "Otsi lemmat", animation: true});
+        $('.clickable-row2').tooltip({title: "Otsi vormi", animation: true});
+
+    });
+
+
+</script>

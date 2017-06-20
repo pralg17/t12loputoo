@@ -1,0 +1,96 @@
+.page-header {
+    background-color: #66a3c3;
+    margin-top: 0;
+    padding: 20px 20px 20px 40px;
+}
+
+.page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
+    color: #ffffff;
+    font-size: 36pt;
+    text-decoration: none;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Lobster', cursive;
+}
+
+.clear {
+    clear: both !important;
+}
+
+.post-form textarea, .post-form input {
+    width: 100%;
+}
+
+.top-menu, .top-menu:hover, .top-menu:visited {
+    color: #ffffff;
+    float: right;
+    font-size: 26pt;
+    margin-right: 20px;
+}
+
+.table-container {
+    display: block;
+	width: 33%;
+    table-layout: fixed !important;
+	float:left !important;
+	padding-right: 20px;
+	padding-left: 20px;
+	
+}
+
+.scroll {
+	display: block;
+    height: 625px !important;
+    table-layout: fixed !important;
+    overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+.matrix-container {
+    display: block;
+    height: 520px;
+    width: auto;
+    overflow-y: scroll;
+	overflow-x: scroll !important;
+    table-layout: fixed !important;
+}
+
+.clickable-row3:hover {
+    color: #0000FF;
+    background-color: #C0C0C0 !important;
+}
+
+.clickable-row2:hover {
+    color: #0000FF;
+	cursor: pointer !important;
+    background-color: #C0C0C0 !important;
+}
+
+.clickable-row:hover {
+    color: #0000FF;
+	cursor: pointer !important;
+    background-color: #C0C0C0 !important;
+}
+.dataTables_filter {
+	margin-top: 5px !important;
+}
+
+input, label {
+    display:block;  }
+
+
+
+button{
+    float: right;
+}
+
+@media (max-width: 1200px) {
+  .table-container {
+		display: block;
+		width: 100%;
+		table-layout: fixed !important;
+		float:left !important;
+		
+	}
+}
