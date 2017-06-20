@@ -1,0 +1,175 @@
+{% extends 'website/base.html' %}
+{% load staticfiles %}
+{% load filter_tags %}
+
+
+<!-- Tegemist on puhta html koodiga, mis Django raamistiku töttu lubab {} sees kasutada Pythoni koodi 'template tag' kasutades.
+<!-- Loogsulud protsentidega tähistab et tegemist on Pythoni keele võtmesõnaga. -->
+<!-- Topeltloogsulud. tähistab Pythoni muutujat, mida me t012loputoo/website/views.py muudame selles failis arusaadavaks.
+<!-- Staticfails laeb sisse eraldi kausta mille sees on kõik pildid, javascript failid jne.
+<!-- Kõik mis on block content ja endblock tagi vahel, lisatakse base.html sisse kus on samuti block ja endblock tagid. -->
+<!-- Sarnane veebirakenduste kursuses html laiendamisega extend'i kasutades. -->
+<!-- form.as_p trükib formi input elemendid paragraafidena välja -->
+<!-- csrf_token kaitseb väliste rünnakute eest, Django ei luba forme kasutada ilma nendeta, turvameetmete tõttu. -->
+{% block content %}
+
+	<div>
+	<h1>Sisestage algtekst</h1>
+
+	<form method="POST" action="" class="post-form">{% csrf_token %} 
+	
+		{{ form.as_p }} 
+	<div id="page-wrapper">
+
+		<h3>Teksti lisamine failist</h3>
+		<div>
+			<input type="file" id="fileInput">
+		</div>
+	</div>
+		<button type="submit" class="save btn btn-default">Saada</button>
+	</form>
+	<button class="btn btn-success btn-md" > ? </button>
+	</div>
+	<div>
+	<p class="clear"> </p>
+	</div>
+<!-- Kontrollib, kas form on saadetud ja et backendis oleksid andmed olemas.  -->
+	{% if lemmas %}
+	    <div class="table-container">
+			<h1>Tähejärjendid</h1>
+			<div class="scroll">
+
+				<table class="table table-striped" id="myTable2">
+					<thead>
+					<tr>
+						<th>#</th>
+						<th>Tähejärjend</th>
+						<th>Kogus</th>
+					</tr>
+					</thead>
+					<tbody>
+					<!-- Forloop counter loeb üle mitu korda for loop on oma tsükklit teinud -->
+					<!-- Lisatud selle jaoks, et näha kui mitmendal kohal sageduse poolest see esineb.-->
+					{% for letter in letters %}
+
+
+						<tr onclick="clicked(this)" class='clickable-row' id='{{letter.0}}'>
+							<td style='cursor:pointer'>{{ forloop.counter }}</td>
+							<td style='cursor:pointer'>{{ letter.0 }}</td>
+							<td style='cursor:pointer'>{{ letter.1 }}</td>
+						</tr>
+
+
+					{% endfor %}
+					</tbody>
+
+				</table>
+				</div>
+        </div>
+
+
+	<!-- Kontrollib, kas form on saadetud ja et backendis oleksid andmed olemas.  -->
+	{% if lemmas %}
+
+
+		<div class="table-container">
+
+		<h1>Lemmad</h1>
+
+		<div class="scroll">
+			<table class="table table-striped" id="myTable">
+
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Lemma</th>
+						<th>Kogus</th>
+					</tr>
+				</thead>
+				<tbody>
+
+					<!-- Võtab sisse lemmade listi ja kirjutab välja iga for tsükkliga tabeli rea. -->
+					<!-- Kuna lemma on list, siis selle elementide indekseerimine käib punkti abil. vt rida 30/31. -->
+					<!-- Muutuja lemmas on kujul [['lemma', esinemissagedus], ['lemma2', esinemissagedus2], ['lemma3', esinemissagedus3]] -->
+					<!-- Muutuja lemma on kujul ['lemma', esinemissagedus] -->
+					{% for lemma in lemmas %}
+						<tr onclick="clicked2(this)" class='clickable-row2'  id='{{lemma.0}}'>
+							<td style='cursor:pointer'>{{ forloop.counter }}</td>
+							<td style='cursor:pointer'>{{ lemma.0 }}</td>
+							<td style='cursor:pointer'>{{ lemma.1 }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		</div>
+
+		<div class="table-container-right">
+		<h1>Vormid</h1>
+
+		<div class="scroll">
+			<table class="table table-striped" id="myTable4">
+
+				<thead>
+					<tr>
+                        <th>#</th>
+						<th>Vorm</th>
+						<th>Lemma</th>
+						<th>Kogus</th>
+					</tr>
+				</thead>
+				<tbody>
+
+					<!-- Võtab sisse lemmade listi ja kirjutab välja iga for tsükkliga tabeli rea. -->
+					<!-- Kuna lemma on list, siis selle elementide indekseerimine käib punkti abil. vt rida 30/31. -->
+					<!-- Muutuja lemmas on kujul [['lemma', esinemissagedus], ['lemma2', esinemissagedus2], ['lemma3', esinemissagedus3]] -->
+					<!-- Muutuja lemma on kujul ['lemma', esinemissagedus] -->
+					{% for word_text in word_texts %}
+
+						<tr onclick="clicked3(this)" class='clickable-row3'  >
+							<td>{{ forloop.counter }}</td>
+							<td>{{ word_text.1 }}</td>
+							<td>{{ word_text.2 }}</td>
+							<td>{{ word_text.3 }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		</div>
+	<div>
+	<p class="clear"></p>
+	</div>
+	{% if matrix %}
+	<h1 style="margin-top: 30px;">Külgnevusmaatriks</h1>
+        <div class="matrix-container">
+
+            <table class="table table-striped" id="myTable3">
+                <thead>
+                <tr>
+                    <th></th>
+                    {% for head in header %}
+                        <th>{{ head }}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for sequence in matrix %}
+                    <tr onclick="clicked3(this)" class='clickable-row3'>
+                        <td>{{ header|get_at_index:forloop.counter0}}</td>
+                        {% for data in sequence %}
+                            <td>{{ data }}</td>
+                        {% endfor %}
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+       {% endif %}
+
+	{% endif %}
+    {% endif %}
+
+{% endblock %}
